@@ -45,7 +45,7 @@ export const logout = () => {
 export const getPlaylists = async ({ token }: User): Promise<Playlist[]> => {
   //@ts-ignore
   const music = MusicKit ? MusicKit.getInstance() : "";
-  const playlists: any = await fetch(API_URL, {
+  const res: any = await fetch(API_URL, {
     headers: {
       "Music-User-Token": token,
       Authorization: `Bearer ${music.developerToken}`,
@@ -54,7 +54,7 @@ export const getPlaylists = async ({ token }: User): Promise<Playlist[]> => {
     },
   });
 
-  const { data } = await playlists.json();
+  const { data } = await res.json();
   return await Promise.all(
     data.map(async (pls: any) => await parsePlaylist(pls))
   );

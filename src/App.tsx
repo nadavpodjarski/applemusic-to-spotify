@@ -26,11 +26,13 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <Source />
-      <Divider orientation="vertical" className={classes.divider} />
-      <Destination />
-    </div>
+    <>
+      <div className="App">
+        <Source />
+        <Divider orientation="vertical" className={classes.divider} />
+        <Destination />
+      </div>
+    </>
   );
 }
 
