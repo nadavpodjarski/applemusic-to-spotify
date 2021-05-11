@@ -76,7 +76,7 @@ const parsePlaylist = async (playlist: any): Promise<Playlist> => {
       artist: attributes.artistName,
       name: attributes.name,
       id,
-      img: attributes.artwork.url,
+      image: attributes.artwork.url,
     })
   );
   return { title, songs, id };

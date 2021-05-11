@@ -14,13 +14,18 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     gap: theme.spacing(1),
   },
+  image: {
+    height: 36,
+    width: 36,
+    borderRadius: theme.spacing(0.5),
+  },
 }));
 
 const Song = ({ artist, duration, image, name, id }: SongType) => {
   const classes = useStyles();
   return (
     <ListItem divider button dense key={id} className={classes.item}>
-      <img src={image} alt="" width={36} height={36} />
+      <img src={image} alt="" className={classes.image} />
       <div className={classes.text}>
         <Typography component="span">{name}</Typography>
         <Typography

@@ -16,6 +16,22 @@ export const getProviderLayout = ({ provider }: { [key: string]: string }) =>
 export const cleanStringFromSpecialChar = (str: string) =>
   str.replace(/[&\/\\#,+()$~%.'":*?<>{}]/gi, " ");
 
-export const convertMilliseconds = (duration: number) =>
-  //@ts-ignore
-  duration;
+export const convertMilliseconds = (
+  duration: number,
+  literal: boolean = false
+) => {
+  const addZero = (time: number) => (time < 10 ? "0" + time : time);
+
+  const hours = Math.floor(duration / (1000 * 60 * 60));
+  const minutes = Math.floor(duration / (1000 * 60)) % 60;
+  const seconds = Math.floor(duration / 1000) % 60;
+
+  if (literal) {
+    return `${hours ? `${hours} hours ` : ""}${
+      minutes ? `${minutes} min ` : ""
+    }${seconds} seconds`;
+  }
+  return `${!!hours ? addZero(hours) + ":" : ""}${
+    minutes ? addZero(minutes) + ":" : ""
+  }${addZero(seconds)}`;
+};

@@ -21,11 +21,12 @@ const Playlist = ({
   title,
   id,
   onCopy,
+  image,
 }: PlaylistType & { onCopy?: "" | ((id: string) => void) }) => {
   const classes = useStyles();
   return (
     <List className={classes.root}>
-      <PlaylistHeader {...{ onCopy, id, title }} />
+      <PlaylistHeader {...{ onCopy, id, title, image, songs }} />
       {songs.map((song) => (
         <Song {...{ ...song }} />
       ))}
