@@ -2,11 +2,6 @@ import { SpotifyWithCircle } from "@styled-icons/entypo-social";
 import { User, Playlist } from "../utils";
 import SpotifyWebApi from "spotify-web-api-js";
 
-const spotifyWebApi = new SpotifyWebApi();
-
-const AUTHORIZE_URI = "https://accounts.spotify.com/authorize";
-const REDIRECT_URI = `${window.location.origin}/spotify-interceptor`;
-
 const SCOPES = [
   "user-read-playback-state",
   "user-modify-playback-state",
@@ -22,6 +17,26 @@ const SCOPES = [
   "user-read-playback-position",
   "user-read-recently-played",
 ].join("%20");
+
+const REDIRECT_URI = `${window.location.origin}/spotify-interceptor`;
+const AUTHORIZE_URI = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}&show_dialog=true`;
+
+const spotifyWebApi = new SpotifyWebApi();
+
+const parsePlaylist = async ({ id, name }: any) => ({
+  id,
+  title: name,
+  songs: await parsePlaylistSongs(id),
+});
+
+const parsePlaylistSongs = async (id: string) => {
+  const songs = await spotifyWebApi.getPlaylistTracks(id);
+  return songs.items.map(({ track }: any) => ({
+    id: track.id,
+    name: track.name,
+    artist: track.artists[0].name,
+  }));
+};
 
 export const layout = {
   style: {
@@ -53,7 +68,7 @@ export const login = async (): Promise<User> => {
       }
     };
     const popup = window?.open(
-      `${AUTHORIZE_URI}?client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}&show_dialog=true`,
+      AUTHORIZE_URI,
       "Spotify Login",
       `width=${width},height=${height},right=${right},top=${top}`
     );
@@ -68,53 +83,39 @@ export const login = async (): Promise<User> => {
   });
 };
 
-const getPlaylistSongs = async (id: string) => {
-  const songs = await spotifyWebApi.getPlaylistTracks(id);
-  return songs.items.map(({ track }: any) => ({
-    id: track.id,
-    name: track.name,
-    artist: track.artists[0].name,
-  }));
-};
-
 export const getPlaylists = async ({ id }: User): Promise<Playlist[]> => {
   const data = await spotifyWebApi.getUserPlaylists(id);
   return await Promise.all(
-    data.items.map(async ({ id, name }: any) => ({
-      id,
-      title: name,
-      songs: await getPlaylistSongs(id),
-    }))
+    data.items.map(async (playlist) => await parsePlaylist(playlist))
   );
+};
+
+export const createPlaylist = async (playlist: Playlist, { id }: User) => {
+  const newPlaylist = await spotifyWebApi.createPlaylist(id, {
+    name: playlist.title,
+    public: true,
+    description: "",
+  });
+
+  const trackuris = await Promise.all(
+    playlist.songs.map(async (song) => {
+      const {
+        tracks: { items },
+      } = await spotifyWebApi.searchTracks(`${song.artist} ${song.name}`);
+      return items[0]?.uri;
+    })
+  );
+
+  await spotifyWebApi.addTracksToPlaylist(
+    newPlaylist.id,
+    trackuris.filter(Boolean)
+  );
+
+  const res = await spotifyWebApi.getPlaylist(newPlaylist.id);
+
+  return parsePlaylist(res);
 };
 
 export const logout = () => {};
 
 export const search = () => {};
-
-export const createPlaylist = async (playlist: Playlist, { id }: User) => {
-  if (id) {
-    const newPlaylist = await spotifyWebApi.createPlaylist(id, {
-      name: playlist.title,
-      public: true,
-      description: "",
-    });
-    const trackuris = await Promise.all(
-      playlist.songs.map(async (song) => {
-        const {
-          tracks: { items },
-        } = await spotifyWebApi.searchTracks(`${song.artist} ${song.name}`);
-        return items[0]?.uri;
-      })
-    );
-    const res = await spotifyWebApi.addTracksToPlaylist(
-      newPlaylist.id,
-      trackuris.filter(Boolean)
-    );
-
-    return res;
-  }
-  return;
-};
-
-const addSongToPlaylist = () => {};

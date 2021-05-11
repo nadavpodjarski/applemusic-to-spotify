@@ -4,6 +4,7 @@ import {
   DESTINATION_LOCAL_STORGAE_KEY,
   IStore,
   musicProvidersConfig,
+  Playlist,
 } from "../../utils";
 
 export const setSourceProvider = (payload: any) => {
@@ -18,6 +19,11 @@ export const setDestinationProvider = (payload: any) => {
   localStorage.setItem(DESTINATION_LOCAL_STORGAE_KEY, payload.provider);
   return { type: types.SET_DESTINATION_PROVIDER, payload };
 };
+
+const addPlaylistToDestination = (payload: Playlist) => ({
+  type: types.ADD_PLAYLIST_TO_DESTINATION,
+  payload,
+});
 
 export const copyPlaylist = (playlistIdFromSource: string) => async (
   dispatch: any,
@@ -36,6 +42,6 @@ export const copyPlaylist = (playlistIdFromSource: string) => async (
       playlist,
       currentUser
     );
-    console.log(playlistIdFromSource, destination, currentUser);
+    dispatch(addPlaylistToDestination(res));
   }
 };

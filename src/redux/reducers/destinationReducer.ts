@@ -31,6 +31,13 @@ export const destinationReducer = (
       const { err } = action.payload;
       return { ...state, err, isLoading: false };
     }
+    case types.ADD_PLAYLIST_TO_DESTINATION: {
+      const playlist = action.payload;
+      return {
+        ...state,
+        playlists: [playlist, ...state.playlists],
+      };
+    }
     default:
       return state;
   }
