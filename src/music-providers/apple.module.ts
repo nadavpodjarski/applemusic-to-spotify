@@ -70,7 +70,7 @@ const parsePlaylist = async (playlist: any): Promise<Playlist> => {
   const pls = await (id.startsWith("p.")
     ? music.api.library.playlist(id)
     : music.api.playlist(id));
-
+  console.log(pls);
   const songs = pls.relationships.tracks.data.map(
     ({ attributes, id }: any) => ({
       artist: attributes.artistName,

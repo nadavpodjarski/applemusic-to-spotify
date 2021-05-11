@@ -15,3 +15,7 @@ export const getProviderLayout = ({ provider }: { [key: string]: string }) =>
 
 export const cleanStringFromSpecialChar = (str: string) =>
   str.replace(/[&\/\\#,+()$~%.'":*?<>{}]/gi, " ");
+
+export const convertMilliseconds = (duration: number) =>
+  //@ts-ignore
+  duration;

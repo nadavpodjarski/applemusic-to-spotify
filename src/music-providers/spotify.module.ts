@@ -23,19 +23,24 @@ const AUTHORIZE_URI = `https://accounts.spotify.com/authorize?client_id=${proces
 
 const spotifyWebApi = new SpotifyWebApi();
 
-const parsePlaylist = async ({ id, name }: any) => ({
+const parsePlaylist = async ({ id, name: title, images }: any) => ({
   id,
-  title: name,
+  title,
   songs: await parsePlaylistSongs(id),
+  image: images[0].url,
 });
 
 const parsePlaylistSongs = async (id: string) => {
   const songs = await spotifyWebApi.getPlaylistTracks(id);
-  return songs.items.map(({ track }: any) => ({
-    id: track.id,
-    name: track.name,
-    artist: track.artists[0].name,
-  }));
+  return songs.items.map(
+    ({ track: { name, id, artists, album, duration_ms: duration } }: any) => ({
+      id,
+      name,
+      duration,
+      artist: artists[0].name,
+      image: album.images[0].url,
+    })
+  );
 };
 
 export const layout = {
@@ -62,8 +67,7 @@ export const login = async (): Promise<User> => {
         window.removeEventListener("message", handleHashToken);
         const token = e.data.substr(1).split("&")[0].split("=")[1];
         spotifyWebApi.setAccessToken(token);
-        const data = await spotifyWebApi.getMe();
-        const { id } = data;
+        const { id } = await spotifyWebApi.getMe();
         resolve({ id, token });
       }
     };
@@ -72,6 +76,7 @@ export const login = async (): Promise<User> => {
       "Spotify Login",
       `width=${width},height=${height},right=${right},top=${top}`
     );
+
     window.addEventListener("message", handleHashToken);
 
     const interval = setInterval(() => {
@@ -106,6 +111,7 @@ export const createPlaylist = async (playlist: Playlist, { id }: User) => {
           song.artist
         )} ${cleanStringFromSpecialChar(song.name)}`
       );
+
       if (!items[0]?.uri) alert(`Couldnt find ${song.artist} ${song.name}`);
       return items[0]?.uri;
     })

@@ -34,11 +34,12 @@ export type User = {
   id: string;
 };
 
-type Song = {
+export type Song = {
   artist: string;
   name: string;
   id: string;
   image?: string;
+  duration?: number;
 };
 
 export type Playlist = {
@@ -46,6 +47,7 @@ export type Playlist = {
   title: string;
   songs: Array<Song>;
   description?: string;
+  image?: any;
 };
 
 export interface IMusicProvider {
