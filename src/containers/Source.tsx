@@ -48,6 +48,10 @@ const Source = () => {
   const logoutHandler = async () =>
     dispatch(actions.sourceLogout({ provider: self }));
 
+  const copyPlaylistHandler = (id: string) => {
+    console.log(id);
+  };
+
   return (
     <div className={classes.root}>
       <Appbar
@@ -63,7 +67,13 @@ const Source = () => {
               <Loader color={layout?.style.background} />
             ) : (
               playlists?.map((playlist) => (
-                <Playlist {...{ ...playlist }} key={playlist.id} />
+                <Playlist
+                  {...{
+                    ...playlist,
+                    onCopy: destination && copyPlaylistHandler,
+                  }}
+                  key={playlist.id}
+                />
               ))
             )}
           </div>

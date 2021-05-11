@@ -4,9 +4,11 @@ import {
   ListItemText,
   makeStyles,
   Typography,
+  Tooltip,
 } from "@material-ui/core";
 
 import { Playlist as PlaylistType } from "../utils";
+import { SendCopy } from "@styled-icons/fluentui-system-filled/";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,13 +31,38 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
+  copyButton: {
+    height: 24,
+    width: 24,
+    cursor: "pointer",
+  },
+  title: {
+    display: "flex",
+    justifyContent: "space-between",
+    background: "rgba(0,0,0,0.1)",
+    height: 64,
+  },
 }));
 
-const Playlist = ({ songs, title }: PlaylistType) => {
+const Playlist = ({
+  songs,
+  title,
+  id,
+  onCopy,
+}: PlaylistType & { onCopy?: "" | ((id: string) => void) }) => {
   const classes = useStyles();
   return (
     <List className={classes.root}>
-      <ListItemText>{title}</ListItemText>
+      <ListItem divider className={classes.title}>
+        {title}
+        {onCopy && (
+          <Tooltip title="Copy Playlist">
+            <span className={classes.copyButton}>
+              <SendCopy onClick={() => onCopy(id)} />
+            </span>
+          </Tooltip>
+        )}
+      </ListItem>
       {songs.map((song) => (
         <ListItem divider button dense key={song.id} className={classes.item}>
           <div className={classes.text}>

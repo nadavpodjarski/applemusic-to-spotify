@@ -45,6 +45,7 @@ export type Playlist = {
   id: string;
   title: string;
   songs: Array<Song>;
+  description?: string;
 };
 
 export interface IMusicProvider {
@@ -60,6 +61,6 @@ export interface IMusicProvider {
   login: () => Promise<User>;
   logout: () => void;
   getPlaylists: (currentUser: User) => Promise<Array<Playlist>>;
-  createPlaylist?: () => any;
+  createPlaylist: (playlist: Playlist) => any;
   search?: () => any;
 }
