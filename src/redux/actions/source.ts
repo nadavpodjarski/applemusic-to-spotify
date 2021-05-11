@@ -23,12 +23,15 @@ export const setSourcePlaylists = (payload: any) => ({
 
 export const getSourcePlaylists = ({
   provider,
+  currentUser,
 }: {
   [key: string]: string;
 }) => async (dispatch: any) => {
   try {
     dispatch({ type: types.GET_SOURCE_PLAYLISTS });
-    const playlists = await musicProvidersConfig[provider].getPlaylists();
+    const playlists = await musicProvidersConfig[provider].getPlaylists({
+      currentUser,
+    });
     dispatch(setSourcePlaylists({ playlists }));
   } catch (err) {
     console.warn(err);
@@ -45,7 +48,7 @@ export const sourceLogin = ({ provider }: { [key: string]: string }) => async (
     if (!currentUser) return;
     dispatch(actions.setSourceProvider({ provider }));
     dispatch(setSourceCurrentUser({ currentUser }));
-    dispatch(getSourcePlaylists({ provider }));
+    dispatch(getSourcePlaylists({ provider, currentUser }));
   } catch (err) {
     console.warn(err);
     dispatch(requestErr({ err }));

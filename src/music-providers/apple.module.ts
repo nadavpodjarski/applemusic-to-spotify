@@ -31,7 +31,9 @@ export const layout = {
 export const login = async () => {
   //@ts-ignore
   const music = MusicKit ? MusicKit.getInstance() : "";
-  return music.authorize().then((user: any) => user);
+  const user = await music.authorize();
+  console.log(user);
+  return user;
 };
 
 export const logout = () => {
@@ -40,12 +42,16 @@ export const logout = () => {
   music.unauthorize();
 };
 
-export const getPlaylists = async (): Promise<Playlist[]> => {
+export const getPlaylists = async ({
+  currentUser,
+}: {
+  [key: string]: string;
+}): Promise<Playlist[]> => {
   //@ts-ignore
   const music = MusicKit ? MusicKit.getInstance() : "";
   const playlists: any = await fetch(API_URL, {
     headers: {
-      "Music-User-Token": music.musicUserToken,
+      "Music-User-Token": currentUser,
       Authorization: `Bearer ${music.developerToken}`,
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -53,7 +59,6 @@ export const getPlaylists = async (): Promise<Playlist[]> => {
   });
 
   const { data } = await playlists.json();
-
   return await Promise.all(
     data.map(async (pls: any) => await parsePlaylist(pls))
   );
@@ -63,7 +68,8 @@ const parsePlaylist = async (playlist: any): Promise<Playlist> => {
   //@ts-ignore
   const music = MusicKit ? MusicKit.getInstance() : "";
 
-  const { name: title, id } = playlist.attributes;
+  const { name: title } = playlist.attributes;
+  const { id } = playlist;
 
   const pls = await (id.startsWith("p.")
     ? music.api.library.playlist(id)

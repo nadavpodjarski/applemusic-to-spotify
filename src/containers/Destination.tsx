@@ -3,17 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core";
 
 import LoginForm from "./LoginForm";
-import Header from "../components/Header";
+import Appbar from "../components/Appbar";
 import Playlist from "../components/Playlist";
 import Loader from "../components/Loader";
+import Title from "../components/Title";
 
-import { getProviderStyle } from "../utils";
+import { getProviderLayout } from "../utils";
 import * as actions from "../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "grid",
-    gridTemplateRows: "auto 1fr",
+    gridTemplateRows: "auto auto 1fr",
     overflow: "hidden",
   },
   body: {
@@ -39,7 +40,7 @@ const Destination = () => {
     (state) => state.app
   );
 
-  const style = useMemo(() => getProviderStyle({ provider: self }), [self]);
+  const layout = useMemo(() => getProviderLayout({ provider: self }), [self]);
 
   const loginHandler = (provider: string) => () =>
     dispatch(actions.destinationLogin({ provider }));
@@ -49,21 +50,24 @@ const Destination = () => {
 
   return (
     <div className={classes.root}>
-      <Header
+      <Appbar
         title="Destination"
         logout={logoutHandler}
         isLoggedIn={!!currentUser}
       />
+      <Title {...{ ...layout, side: "Destination" }} />
       {currentUser && self ? (
-        <div className={classes.body} style={{ ...style }}>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            playlists?.map((playlist) => (
-              <Playlist {...{ ...playlist }} key={playlist.id} />
-            ))
-          )}
-        </div>
+        <>
+          <div className={classes.body}>
+            {isLoading ? (
+              <Loader />
+            ) : (
+              playlists?.map((playlist) => (
+                <Playlist {...{ ...playlist }} key={playlist.id} />
+              ))
+            )}
+          </div>
+        </>
       ) : (
         <LoginForm
           relevantProviders={musicProviders.filter(

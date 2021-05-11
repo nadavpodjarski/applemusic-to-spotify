@@ -3,17 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core";
 
 import LoginForm from "./LoginForm";
-import Header from "../components/Header";
+import Appbar from "../components/Appbar";
 import Playlist from "../components/Playlist";
 import Loader from "../components/Loader";
+import Title from "../components/Title";
 
-import { getProviderStyle } from "../utils";
+import { getProviderLayout } from "../utils";
 import * as actions from "../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "grid",
-    gridTemplateRows: "auto 1fr",
+    gridTemplateRows: "auto auto 1fr",
     overflow: "hidden",
   },
   body: {
@@ -39,7 +40,7 @@ const Source = () => {
     (state) => state.app
   );
 
-  const style = useMemo(() => getProviderStyle({ provider: self }), [self]);
+  const layout = useMemo(() => getProviderLayout({ provider: self }), [self]);
 
   const loginHandler = (provider: string) => async () =>
     dispatch(actions.sourceLogin({ provider }));
@@ -49,21 +50,24 @@ const Source = () => {
 
   return (
     <div className={classes.root}>
-      <Header
+      <Appbar
         title="Source"
         logout={logoutHandler}
         isLoggedIn={!!currentUser}
       />
+      <Title {...{ ...layout, side: "Source" }} />
       {currentUser && self ? (
-        <div className={classes.body} style={{ ...style }}>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            playlists?.map((playlist) => (
-              <Playlist {...{ ...playlist }} key={playlist.id} />
-            ))
-          )}
-        </div>
+        <>
+          <div className={classes.body}>
+            {isLoading ? (
+              <Loader color={layout?.style.background} />
+            ) : (
+              playlists?.map((playlist) => (
+                <Playlist {...{ ...playlist }} key={playlist.id} />
+              ))
+            )}
+          </div>
+        </>
       ) : (
         <LoginForm
           relevantProviders={musicProviders.filter(

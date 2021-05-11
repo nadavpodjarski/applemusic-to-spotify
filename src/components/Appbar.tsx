@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Header = ({ title, logout, isLoggedIn }: IHeader) => {
+const Appbar = ({ title, logout, isLoggedIn }: IHeader) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -40,4 +40,4 @@ const Header = ({ title, logout, isLoggedIn }: IHeader) => {
   );
 };
 
-export default Header;
+export default Appbar;

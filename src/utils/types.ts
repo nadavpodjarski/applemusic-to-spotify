@@ -52,9 +52,11 @@ export interface IMusicProvider {
     displayName: string;
     logo: any;
   };
-  login: () => {};
+  login: () => Promise<any>;
   logout: () => void;
-  getPlaylists: () => Promise<Array<Playlist>>;
+  getPlaylists: (payload: {
+    [key: string]: string;
+  }) => Promise<Array<Playlist>>;
   createPlaylist?: () => any;
   search?: () => any;
 }

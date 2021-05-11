@@ -24,11 +24,11 @@ const useStyles = makeStyles((theme) => ({
     height: 48,
     transition: "box-shadow 0.1s linear",
     borderRadius: 4,
-    fontFamily: (style: any) => style.fontFamily,
+    fontFamily: (style: any) => style.fontFamily || "inherit",
   },
   text: {
     marginLeft: theme.spacing(1.5),
-    fontWeight: "bold",
+    fontWeight: 500,
   },
   logo: {
     height: 32,

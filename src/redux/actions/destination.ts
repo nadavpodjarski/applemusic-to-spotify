@@ -27,12 +27,15 @@ export const setDestinationPlaylists = (payload: any) => ({
 
 export const getDestinationPlaylists = ({
   provider,
+  currentUser,
 }: {
   [key: string]: string;
 }) => async (dispatch: any) => {
   try {
     dispatch({ type: types.GET_DESTINATION_PLAYLISTS });
-    const playlists = await musicProvidersConfig[provider].getPlaylists();
+    const playlists = await musicProvidersConfig[provider].getPlaylists({
+      currentUser,
+    });
     dispatch(setDestinationPlaylists({ playlists }));
   } catch (err) {
     console.warn(err);
@@ -51,7 +54,7 @@ export const destinationLogin = ({
     if (!currentUser) return;
     dispatch(actions.setDestinationProvider({ provider }));
     dispatch(setDestinationCurrentUser({ currentUser }));
-    dispatch(getDestinationPlaylists({ provider }));
+    dispatch(getDestinationPlaylists({ provider, currentUser }));
   } catch (err) {
     console.warn(err);
     dispatch(requestErr({ err }));

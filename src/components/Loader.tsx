@@ -1,6 +1,10 @@
 import { CircularProgress } from "@material-ui/core";
 
-const Loader = () => {
+type LoaderType = {
+  color?: string;
+};
+
+const Loader = ({ color }: LoaderType) => {
   return (
     <div
       style={{
@@ -9,7 +13,7 @@ const Loader = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        color: "white",
+        color: color || "black",
       }}
     >
       <CircularProgress color="inherit" />

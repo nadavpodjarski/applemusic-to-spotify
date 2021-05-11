@@ -1,4 +1,14 @@
 import { musicProvidersConfig } from "./";
 
-export const getProviderStyle = ({ provider }: { [key: string]: string }) =>
-  provider && musicProvidersConfig[provider]?.layout.style;
+const defaultLayout = {
+  style: {
+    background: "",
+    color: "",
+    fontFamily: "",
+  },
+  displayName: "",
+  logo: "",
+};
+
+export const getProviderLayout = ({ provider }: { [key: string]: string }) =>
+  musicProvidersConfig[provider]?.layout || defaultLayout;

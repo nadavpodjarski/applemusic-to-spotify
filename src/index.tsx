@@ -15,6 +15,9 @@ import { store } from "./redux/store";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "./theme/";
 
+process.env.NODE_ENV === "production" &&
+  document.addEventListener("contextmenu", (e) => e.preventDefault());
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

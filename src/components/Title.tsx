@@ -1,0 +1,59 @@
+import { makeStyles, Typography } from "@material-ui/core";
+
+interface ITitle {
+  logo: any;
+  displayName: string;
+  side: string;
+  style?: {
+    background: string;
+    color: string;
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: 100,
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(2),
+    boxSizing: "border-box",
+    gap: theme.spacing(2),
+    justifyContent: "center",
+    userSelect: "none",
+    boxShadow: theme.shadows[4],
+    zIndex: 9999,
+  },
+  displayName: {
+    fontSize: theme.spacing(6),
+    fontWeight: 700,
+    position: "relative",
+  },
+  logo: { height: 48, width: 48 },
+  side: {},
+}));
+
+const Title = ({ logo: Logo, displayName, side, style }: ITitle) => {
+  const classes = useStyles();
+
+  if (!style || !displayName) return <div />;
+
+  return (
+    <div style={{ ...style }} className={classes.root}>
+      <span className={classes.logo}>
+        <Logo />
+      </span>
+      <Typography classes={{ root: classes.displayName }}>
+        {displayName}
+        <Typography
+          color="textSecondary"
+          component="sub"
+          classes={{ root: classes.side }}
+        >
+          {side}
+        </Typography>
+      </Typography>
+    </div>
+  );
+};
+
+export default Title;

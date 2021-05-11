@@ -7,7 +7,9 @@ export let theme = createMuiTheme({
   typography: {
     button: {
       textTransform: "none",
+      fontFamily: "inherit",
     },
+    fontFamily: "inherit",
   },
 });
 

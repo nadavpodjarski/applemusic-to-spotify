@@ -24,7 +24,7 @@ export const layout = {
     background:
       "linear-gradient(180deg, rgba(57,215,95,1) 0%, rgba(57,215,164,1) 100%)",
     color: "white",
-    fontFamily: "Circular",
+    fontFamily: "",
   },
   logo: SpotifyWithCircle,
   displayName: "Spotify",
@@ -41,21 +41,29 @@ export const login = async () => {
     const handleHashToken = (e: any) => {
       if (typeof e.data === "string" && e.data.startsWith("#access_token")) {
         window.removeEventListener("message", handleHashToken);
-        resolve(e.data);
+        const token = e.data.substr(1).split("&")[0].split("=")[1];
+        resolve(token);
       }
     };
-    window?.open(
+    const popup = window?.open(
       `${AUTHORIZE_URI}?client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}&show_dialog=true`,
       "Spotify Login",
       `width=${width},height=${height},right=${right},top=${top}`
     );
     window.addEventListener("message", handleHashToken);
+
+    const interval = setInterval(() => {
+      if (popup?.closed) {
+        clearInterval(interval);
+        window.removeEventListener("message", handleHashToken);
+      }
+    }, 1000);
   });
 };
 
 export const logout = () => {};
 
-export const getPlaylists = async () => {
+export const getPlaylists = async ({}) => {
   return [];
 };
 
