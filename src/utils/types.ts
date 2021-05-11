@@ -29,6 +29,11 @@ export interface IStore {
   destination: IDestination;
 }
 
+export type User = {
+  token: string;
+  id: string;
+};
+
 type Song = {
   artist: string;
   name: string;
@@ -52,11 +57,9 @@ export interface IMusicProvider {
     displayName: string;
     logo: any;
   };
-  login: () => Promise<any>;
+  login: () => Promise<User>;
   logout: () => void;
-  getPlaylists: (payload: {
-    [key: string]: string;
-  }) => Promise<Array<Playlist>>;
+  getPlaylists: (currentUser: User) => Promise<Array<Playlist>>;
   createPlaylist?: () => any;
   search?: () => any;
 }

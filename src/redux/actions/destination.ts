@@ -4,6 +4,7 @@ import * as actions from "./";
 import {
   DESTINATION_LOCAL_STORGAE_KEY,
   musicProvidersConfig,
+  User,
 } from "../../utils";
 
 const requestErr = (payload: any) => ({
@@ -29,13 +30,14 @@ export const getDestinationPlaylists = ({
   provider,
   currentUser,
 }: {
-  [key: string]: string;
+  provider: string;
+  currentUser: User;
 }) => async (dispatch: any) => {
   try {
     dispatch({ type: types.GET_DESTINATION_PLAYLISTS });
-    const playlists = await musicProvidersConfig[provider].getPlaylists({
-      currentUser,
-    });
+    const playlists = await musicProvidersConfig[provider].getPlaylists(
+      currentUser
+    );
     dispatch(setDestinationPlaylists({ playlists }));
   } catch (err) {
     console.warn(err);

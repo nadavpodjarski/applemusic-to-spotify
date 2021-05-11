@@ -1,5 +1,5 @@
 import { Applemusic } from "@styled-icons/simple-icons/";
-import { Playlist } from "../utils";
+import { Playlist, User } from "../utils";
 
 const API_URL = "https://api.music.apple.com/v1/me/library/playlists";
 
@@ -28,12 +28,12 @@ export const layout = {
   logo: Applemusic,
 };
 
-export const login = async () => {
+export const login = async (): Promise<User> => {
   //@ts-ignore
   const music = MusicKit ? MusicKit.getInstance() : "";
-  const user = await music.authorize();
-  console.log(user);
-  return user;
+  const token = await music.authorize();
+
+  return { token, id: "" };
 };
 
 export const logout = () => {
@@ -42,16 +42,12 @@ export const logout = () => {
   music.unauthorize();
 };
 
-export const getPlaylists = async ({
-  currentUser,
-}: {
-  [key: string]: string;
-}): Promise<Playlist[]> => {
+export const getPlaylists = async ({ token }: User): Promise<Playlist[]> => {
   //@ts-ignore
   const music = MusicKit ? MusicKit.getInstance() : "";
   const playlists: any = await fetch(API_URL, {
     headers: {
-      "Music-User-Token": currentUser,
+      "Music-User-Token": token,
       Authorization: `Bearer ${music.developerToken}`,
       Accept: "application/json",
       "Content-Type": "application/json",

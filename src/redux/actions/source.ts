@@ -1,6 +1,10 @@
 import * as types from "../types";
 import * as actions from "./";
-import { SOURCE_LOCAL_STORAGE_KEY, musicProvidersConfig } from "../../utils";
+import {
+  SOURCE_LOCAL_STORAGE_KEY,
+  musicProvidersConfig,
+  User,
+} from "../../utils";
 
 const requestErr = (payload: any) => ({
   type: types.SOURCE_REQUEST_ERROR,
@@ -25,13 +29,14 @@ export const getSourcePlaylists = ({
   provider,
   currentUser,
 }: {
-  [key: string]: string;
+  provider: string;
+  currentUser: User;
 }) => async (dispatch: any) => {
   try {
     dispatch({ type: types.GET_SOURCE_PLAYLISTS });
-    const playlists = await musicProvidersConfig[provider].getPlaylists({
-      currentUser,
-    });
+    const playlists = await musicProvidersConfig[provider].getPlaylists(
+      currentUser
+    );
     dispatch(setSourcePlaylists({ playlists }));
   } catch (err) {
     console.warn(err);

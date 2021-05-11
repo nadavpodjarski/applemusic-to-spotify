@@ -1,7 +1,9 @@
 import { SpotifyWithCircle } from "@styled-icons/entypo-social";
+import { User } from "../utils";
 
 const AUTHORIZE_URI = "https://accounts.spotify.com/authorize";
 const REDIRECT_URI = `${window.location.origin}/spotify-interceptor`;
+const ME_URI = "https://api.spotify.com/v1/me";
 
 const SCOPES = [
   "user-read-playback-state",
@@ -30,7 +32,7 @@ export const layout = {
   displayName: "Spotify",
 };
 
-export const login = async () => {
+export const login = async (): Promise<User> => {
   //POPUP WINDOW DIMENSIONS
   const width = 700;
   const height = 600;
@@ -42,7 +44,19 @@ export const login = async () => {
       if (typeof e.data === "string" && e.data.startsWith("#access_token")) {
         window.removeEventListener("message", handleHashToken);
         const token = e.data.substr(1).split("&")[0].split("=")[1];
-        resolve(token);
+
+        fetch(ME_URI, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            const { id } = data;
+            resolve({ id, token });
+          });
       }
     };
     const popup = window?.open(
