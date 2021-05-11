@@ -92,21 +92,29 @@ export const logout = () => {};
 
 export const search = () => {};
 
-export const createPlaylist = async (playlist: Playlist, id?: string) => {
+export const createPlaylist = async (playlist: Playlist, { id }: User) => {
   if (id) {
-    // const newPlaylist = await spotifyWebApi.createPlaylist(id, {
-    //   name: playlist.title,
-    //   public: false,
-    //   description: "",
-    // });
-
-    playlist.songs.forEach((song) => {
-      const newTrack = spotifyWebApi.searchTracks(
-        `${song.artist} ${song.name}`
-      );
-      console.log(newTrack);
+    const newPlaylist = await spotifyWebApi.createPlaylist(id, {
+      name: playlist.title,
+      public: true,
+      description: "",
     });
+    const trackuris = await Promise.all(
+      playlist.songs.map(async (song) => {
+        const {
+          tracks: { items },
+        } = await spotifyWebApi.searchTracks(`${song.artist} ${song.name}`);
+        return items[0]?.uri;
+      })
+    );
+    const res = await spotifyWebApi.addTracksToPlaylist(
+      newPlaylist.id,
+      trackuris.filter(Boolean)
+    );
+
+    return res;
   }
+  return;
 };
 
 const addSongToPlaylist = () => {};

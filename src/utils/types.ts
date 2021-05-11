@@ -61,6 +61,6 @@ export interface IMusicProvider {
   login: () => Promise<User>;
   logout: () => void;
   getPlaylists: (currentUser: User) => Promise<Array<Playlist>>;
-  createPlaylist: (playlist: Playlist) => any;
+  createPlaylist: (playlist: Playlist, currentUser: User) => Promise<any>;
   search?: () => any;
 }

@@ -11,6 +11,14 @@ export let theme = createMuiTheme({
     },
     fontFamily: "inherit",
   },
+  overrides: {
+    MuiTooltip: {
+      tooltip: {
+        fontSize: 14,
+        fontFamily: "Poppins",
+      },
+    },
+  },
 });
 
 theme = responsiveFontSizes(theme);

@@ -2,6 +2,8 @@ import * as types from "../types";
 import {
   SOURCE_LOCAL_STORAGE_KEY,
   DESTINATION_LOCAL_STORGAE_KEY,
+  IStore,
+  musicProvidersConfig,
 } from "../../utils";
 
 export const setSourceProvider = (payload: any) => {
@@ -15,4 +17,25 @@ export const setSourceProvider = (payload: any) => {
 export const setDestinationProvider = (payload: any) => {
   localStorage.setItem(DESTINATION_LOCAL_STORGAE_KEY, payload.provider);
   return { type: types.SET_DESTINATION_PROVIDER, payload };
+};
+
+export const copyPlaylist = (playlistIdFromSource: string) => async (
+  dispatch: any,
+  getStore: () => IStore
+) => {
+  const {
+    app: { destination },
+    destination: { currentUser },
+    source: { playlists },
+  } = getStore();
+
+  const playlist = playlists.find((pls) => pls.id === playlistIdFromSource);
+  if (playlist) {
+    dispatch({ type: types.COPY_PLAYLIST });
+    const res = await musicProvidersConfig[destination].createPlaylist(
+      playlist,
+      currentUser
+    );
+    console.log(playlistIdFromSource, destination, currentUser);
+  }
 };

@@ -48,9 +48,8 @@ const Source = () => {
   const logoutHandler = async () =>
     dispatch(actions.sourceLogout({ provider: self }));
 
-  const copyPlaylistHandler = (id: string) => {
-    console.log(id);
-  };
+  const copyPlaylistHandler = (id: string) =>
+    dispatch(actions.copyPlaylist(id));
 
   return (
     <div className={classes.root}>

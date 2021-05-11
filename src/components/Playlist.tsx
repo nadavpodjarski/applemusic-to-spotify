@@ -1,7 +1,6 @@
 import {
   List,
   ListItem,
-  ListItemText,
   makeStyles,
   Typography,
   Tooltip,
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     display: "flex",
     justifyContent: "space-between",
-    background: "rgba(0,0,0,0.1)",
+    background: theme.palette.divider,
     height: 64,
   },
 }));

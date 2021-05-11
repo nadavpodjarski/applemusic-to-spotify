@@ -83,4 +83,6 @@ const parsePlaylist = async (playlist: any): Promise<Playlist> => {
   return { title, songs, id };
 };
 
-export const createPlaylist = (playlist: Playlist) => {};
+export const createPlaylist = async (playlist: Playlist, currentUser: User) => {
+  return "";
+};
