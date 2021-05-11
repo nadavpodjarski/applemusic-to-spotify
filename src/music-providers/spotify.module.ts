@@ -1,5 +1,5 @@
 import { SpotifyWithCircle } from "@styled-icons/entypo-social";
-import { User, Playlist } from "../utils";
+import { User, Playlist, cleanStringFromSpecialChar } from "../utils";
 import SpotifyWebApi from "spotify-web-api-js";
 
 const SCOPES = [
@@ -101,7 +101,12 @@ export const createPlaylist = async (playlist: Playlist, { id }: User) => {
     playlist.songs.map(async (song) => {
       const {
         tracks: { items },
-      } = await spotifyWebApi.searchTracks(`${song.artist} ${song.name}`);
+      } = await spotifyWebApi.searchTracks(
+        `${cleanStringFromSpecialChar(
+          song.artist
+        )} ${cleanStringFromSpecialChar(song.name)}`
+      );
+      if (!items[0]?.uri) alert(`Couldnt find ${song.artist} ${song.name}`);
       return items[0]?.uri;
     })
   );
@@ -112,10 +117,7 @@ export const createPlaylist = async (playlist: Playlist, { id }: User) => {
   );
 
   const res = await spotifyWebApi.getPlaylist(newPlaylist.id);
-
   return parsePlaylist(res);
 };
 
 export const logout = () => {};
-
-export const search = () => {};

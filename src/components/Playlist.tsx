@@ -54,6 +54,7 @@ const Playlist = ({
     <List className={classes.root}>
       <ListItem divider className={classes.title}>
         {title}
+        {songs.length}
         {onCopy && (
           <Tooltip title="Copy Playlist">
             <span className={classes.copyButton}>

@@ -42,6 +42,6 @@ export const copyPlaylist = (playlistIdFromSource: string) => async (
       playlist,
       currentUser
     );
-    dispatch(addPlaylistToDestination(res));
+    res && dispatch(addPlaylistToDestination(res));
   }
 };

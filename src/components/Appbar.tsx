@@ -6,11 +6,11 @@ interface IHeader {
   isLoggedIn: boolean;
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     background: "black",
-    height: 56,
+    height: 48,
     color: "white",
     display: "flex",
     alignItems: "center",
@@ -19,10 +19,12 @@ const useStyles = makeStyles(() => ({
     justifyContent: "space-between",
   },
   logout: {
-    background: "white",
+    background: "none",
     "&:hover": {
-      background: "rgba(255,255,255,0.9)",
+      color: "rgba(255,255,255,0.8)",
     },
+    color: "white",
+    height: 32,
   },
 }));
 

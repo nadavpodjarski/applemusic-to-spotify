@@ -79,10 +79,10 @@ const parsePlaylist = async (playlist: any): Promise<Playlist> => {
       img: attributes.artwork.url,
     })
   );
-
   return { title, songs, id };
 };
 
 export const createPlaylist = async (playlist: Playlist, currentUser: User) => {
+  console.log(playlist);
   return "";
 };
