@@ -22,7 +22,7 @@ const SCOPES = [
 ].join("%20");
 
 const REDIRECT_URI = `${window.location.origin}/spotify-interceptor`;
-const AUTHORIZE_URI = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}&show_dialog=true`;
+const AUTHORIZE_URI = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}&show_dialog=false`;
 
 const spotifyWebApi = new SpotifyWebApi();
 
@@ -61,7 +61,7 @@ export const login = async (): Promise<User> => {
   //POPUP WINDOW DIMENSIONS
   const width = 700;
   const height = 600;
-  const right = window.screen.availWidth / 2 - 600 / 2;
+  const right = window.screen.availWidth / 2 + 600 / 2;
   const top = window.screen.availHeight / 2 - 600 / 2;
   //
   return new Promise((resolve) => {
@@ -114,9 +114,7 @@ export const createPlaylist = async (
       const {
         tracks: { items },
       } = await spotifyWebApi.searchTracks(
-        `${cleanStringFromSpecialChar(
-          song.artist
-        )} ${cleanStringFromSpecialChar(song.name)}`
+        `${cleanStringFromSpecialChar(`${song.artist} ${song.name}`)}`
       );
 
       if (!items[0]?.uri) addFailedCopySong(song);
