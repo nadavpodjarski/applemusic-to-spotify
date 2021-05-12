@@ -29,8 +29,8 @@ const Playlist = ({
   return (
     <List className={classes.root}>
       <PlaylistHeader {...{ onCopy, id, title, image, songs }} />
-      {songs.map((song) => (
-        <Song {...{ ...song }} key={title + song.id + Date.now()} />
+      {songs.map((song, i) => (
+        <Song {...{ ...song }} key={title + song.id + i} />
       ))}
     </List>
   );
