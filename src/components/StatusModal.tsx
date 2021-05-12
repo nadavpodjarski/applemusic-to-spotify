@@ -104,7 +104,7 @@ const StatusModal = () => {
               <span className={classes.badgeCheck}>
                 <BadgeCheck />
               </span>
-              Copied succssefully {successSongs} out of{" "}
+              Copied successfully {successSongs} out of{" "}
               {playlistToCopy?.songs.length} songs
             </span>
             {!!failedCopySongs.length && (
