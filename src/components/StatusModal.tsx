@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     borderRadius: theme.spacing(1),
   },
-  dialog: { padding: 0 },
   root: {
     display: "flex",
     alignItems: "center",
@@ -30,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
     minWidth: 400,
     flexDirection: "column",
-    background: "whitesmoke",
     borderRadius: "inherit",
     gap: theme.spacing(2),
     boxSizing: "border-box",
@@ -100,13 +98,13 @@ const StatusModal = () => {
           </>
         ) : (
           <>
-            <span className={classes.copyHeader}>
+            <Typography component="span" className={classes.copyHeader}>
               <span className={classes.badgeCheck}>
                 <BadgeCheck />
               </span>
               Copied successfully {successSongs} out of{" "}
               {playlistToCopy?.songs.length} songs
-            </span>
+            </Typography>
             {!!failedCopySongs.length && (
               <>
                 <List className={classes.list}>

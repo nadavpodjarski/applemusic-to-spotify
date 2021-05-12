@@ -27,7 +27,9 @@ const Song = ({ artist, duration, image, name, id }: SongType) => {
     <ListItem divider button dense key={id} className={classes.item}>
       <img src={image} alt="" className={classes.image} />
       <div className={classes.text}>
-        <Typography component="span">{name}</Typography>
+        <Typography color="textPrimary" component="span">
+          {name}
+        </Typography>
         <Typography
           component="span"
           color="textSecondary"
@@ -37,7 +39,9 @@ const Song = ({ artist, duration, image, name, id }: SongType) => {
         </Typography>
       </div>
       {duration && (
-        <span className={classes.time}>{convertMilliseconds(duration)}</span>
+        <Typography color="textSecondary" className={classes.time}>
+          {convertMilliseconds(duration)}
+        </Typography>
       )}
     </ListItem>
   );

@@ -2,25 +2,18 @@ import { createMuiTheme, responsiveFontSizes } from "@material-ui/core";
 
 export let theme = createMuiTheme({
   palette: {
-    type: "light",
+    type: "dark",
   },
   typography: {
     button: {
       textTransform: "none",
-      fontFamily: "inherit",
     },
-    fontFamily: "inherit",
+    fontFamily: "Poppins",
   },
   overrides: {
     MuiTooltip: {
       tooltip: {
         fontSize: 14,
-        fontFamily: "Poppins",
-      },
-    },
-    MuiDialog: {
-      root: {
-        fontFamily: "Poppins",
       },
     },
   },

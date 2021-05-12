@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     width: 24,
     cursor: "pointer",
     marginLeft: "auto",
+    color: theme.palette.text.primary,
   },
 
   title: {
@@ -62,11 +63,12 @@ const PlaylistHeader = ({
     <ListItem divider className={classes.title}>
       <img src={image} alt="" className={classes.image} />
       <div className={classes.text}>
-        <Typography component="span">{title}</Typography>
+        <Typography color="textPrimary" component="span">
+          {title}
+        </Typography>
         <div>
-          <Typography component="span">{totalSongs} songs, </Typography>
-          <Typography component="span">
-            {convertMilliseconds(totalDuration, true)}
+          <Typography color="textSecondary" component="span">
+            {totalSongs} songs, {convertMilliseconds(totalDuration, true)}
           </Typography>
         </div>
       </div>
