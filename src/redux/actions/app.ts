@@ -34,14 +34,14 @@ export const copyPlaylist = (playlistIdFromSource: string) => async (
     destination: { currentUser },
     source: { playlists },
   } = getStore();
-
+  if (!currentUser) return;
   const playlist = playlists.find((pls) => pls.id === playlistIdFromSource);
   if (playlist) {
     dispatch({ type: types.COPY_PLAYLIST, payload: playlist });
     const res = await musicProvidersConfig[destination].createPlaylist(
       playlist,
       currentUser,
-      addFailedCopySong
+      addFailedCopySong(dispatch)
     );
     if (res) {
       dispatch(addPlaylistToDestination(res));
@@ -59,7 +59,7 @@ export const setIsCopyinPlaylist = (payload: any) => ({
   payload,
 });
 
-export const addFailedCopySong = (payload: any) => (dispatch: any) =>
+export const addFailedCopySong = (dispatch: any) => (payload: any) =>
   dispatch({
     type: types.ADD_FAILED_SONG_COPY,
     payload,

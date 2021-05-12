@@ -49,7 +49,7 @@ const Source = () => {
     dispatch(actions.sourceLogout({ provider: self }));
 
   const copyPlaylistHandler = (id: string) =>
-    destination && dispatch(actions.copyPlaylist(id));
+    dispatch(actions.copyPlaylist(id));
 
   const relevantMusicProviders = () =>
     musicProviders.filter((provider) => provider !== destination);

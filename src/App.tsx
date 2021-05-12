@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 
 import "./App.css";
-import { useSelector } from "react-redux";
 import Source from "./containers/Source";
 import Destination from "./containers/Destination";
 import StatusModal from "./components/StatusModal";

@@ -3,17 +3,20 @@ import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../redux/actions";
 
-import { makeStyles, Dialog, Typography } from "@material-ui/core";
+import {
+  makeStyles,
+  Dialog,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Button,
+} from "@material-ui/core";
+
 import { Close } from "@styled-icons/evaicons-solid";
-
-import { Song, Playlist } from "../utils";
-
-type StatusModalType = {
-  isCopying: boolean;
-  isOpen: boolean;
-  failedSongs: Song[];
-  playlistToCopy: Playlist | null;
-};
+import { Warning } from "@styled-icons/fluentui-system-filled/";
+import { BadgeCheck } from "@styled-icons/boxicons-regular/";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -22,24 +25,42 @@ const useStyles = makeStyles((theme) => ({
   dialog: { padding: 0 },
   root: {
     display: "flex",
-    justifyContent: "center",
     alignItems: "center",
     padding: 16,
-    width: 300,
+    width: "auto",
     height: "auto",
-    minHeight: 300,
+    minWidth: 400,
     flexDirection: "column",
     background: "whitesmoke",
     borderRadius: "inherit",
     gap: theme.spacing(2),
+    boxSizing: "border-box",
   },
   closeButton: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  warning: {
     height: 24,
     width: 24,
-    position: "absolute",
-    top: 8,
-    right: 8,
-    cursor: "pointer",
+    color: "red",
+  },
+  list: {
+    width: "100%",
+  },
+  copyHeader: {
+    fontSize: 20,
+    fontWeight: 500,
+    display: "flex",
+    gap: theme.spacing(1),
+    padding: theme.spacing(2, 0),
+    boxSizing: "border-box",
+  },
+  badgeCheck: {
+    height: 28,
+    width: 28,
+    color: "green",
   },
 }));
 
@@ -51,7 +72,7 @@ const StatusModal = () => {
     isStatusModalOpen,
     isCopying,
     playlistToCopy,
-    failedCopySongs,
+    failedCopySongs = [],
   } = useSelector((state) => state.status);
 
   const closeHandler = () => dispatch(actions.closeStatusModal());
@@ -60,37 +81,56 @@ const StatusModal = () => {
     () =>
       playlistToCopy?.songs &&
       playlistToCopy?.songs?.length - failedCopySongs?.length,
-    [failedCopySongs]
+    [isCopying]
   );
 
   return (
-    <Dialog open={isStatusModalOpen} classes={{ paper: classes.paper }}>
+    <Dialog
+      open={isStatusModalOpen}
+      transitionDuration={0}
+      classes={{ paper: classes.paper }}
+    >
       <div className={classes.root}>
-        <span className={classes.closeButton}>
-          <Close onClick={closeHandler} />
-        </span>
-        {isCopying && (
-          <div>
-            <Typography>Copying {playlistToCopy?.title}</Typography>
+        {isCopying ? (
+          <>
+            <div className={classes.copyHeader}>
+              <Typography>Copying {playlistToCopy?.title}</Typography>
+            </div>
             <Loader type="Rings" color="rgba(0,0,0,0.3)" />
-          </div>
+          </>
+        ) : (
+          <>
+            <span className={classes.copyHeader}>
+              <span className={classes.badgeCheck}>
+                <BadgeCheck />
+              </span>
+              Copied succssefully {successSongs} out of{" "}
+              {playlistToCopy?.songs.length} songs
+            </span>
+            {!!failedCopySongs.length && (
+              <>
+                <List className={classes.list}>
+                  <ListItem component="span">
+                    <ListItemText>Failed to copy</ListItemText>
+                  </ListItem>
+                  {failedCopySongs?.map((song) => (
+                    <ListItem divider>
+                      <ListItemIcon className={classes.warning}>
+                        <Warning />
+                      </ListItemIcon>
+                      <ListItemText>
+                        {song.name} {song.artist}
+                      </ListItemText>
+                    </ListItem>
+                  ))}
+                </List>
+              </>
+            )}
+          </>
         )}
-        <div>
-          Copied Succssefully {successSongs} out of{" "}
-          {playlistToCopy?.songs.length}
-        </div>
-        <ul>
-          {!!failedCopySongs.length && (
-            <>
-              <div>Failed to copy</div>
-              {failedCopySongs?.map((song) => (
-                <li>
-                  {song.name} {song.artist}
-                </li>
-              ))}
-            </>
-          )}
-        </ul>
+        <span className={classes.closeButton}>
+          <Button onClick={closeHandler}>Close</Button>
+        </span>
       </div>
     </Dialog>
   );

@@ -1,6 +1,5 @@
 import { SpotifyWithCircle } from "@styled-icons/entypo-social";
 import { User, Playlist, cleanStringFromSpecialChar } from "../utils";
-
 import SpotifyWebApi from "spotify-web-api-js";
 
 const SCOPES = [
@@ -17,6 +16,9 @@ const SCOPES = [
   "user-top-read",
   "user-read-playback-position",
   "user-read-recently-played",
+  "user-read-private",
+  "user-read-email",
+  "playlist-read-private",
 ].join("%20");
 
 const REDIRECT_URI = `${window.location.origin}/spotify-interceptor`;
@@ -99,11 +101,11 @@ export const getPlaylists = async ({ id }: User): Promise<Playlist[]> => {
 export const createPlaylist = async (
   playlist: Playlist,
   { id }: User,
-  addFailedCopySong: (payload: any) => (dispatch: any) => any
+  addFailedCopySong: (payload: any) => any
 ): Promise<Playlist> => {
   const newPlaylist = await spotifyWebApi.createPlaylist(id, {
     name: playlist.title,
-    public: true,
+    public: false,
     description: "",
   });
 

@@ -14,6 +14,7 @@ export const getProviderLayout = ({ provider }: { [key: string]: string }) =>
   musicProvidersConfig[provider]?.layout || defaultLayout;
 
 export const cleanStringFromSpecialChar = (str: string) =>
+  // eslint-disable-next-line
   str.replace(/[&\/\\#,+()$~%.'":*?<>{}]/gi, " ");
 
 export const convertMilliseconds = (

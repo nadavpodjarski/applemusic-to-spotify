@@ -21,7 +21,12 @@ export const statusReducer = (state = initialState, action: Action) => {
       };
     }
     case types.CLOSE_STATUS_MODAL: {
-      return { ...state, isStatusModalOpen: false, playlistToCopy: null };
+      return {
+        ...state,
+        isStatusModalOpen: false,
+        playlistToCopy: null,
+        failedCopySongs: [],
+      };
     }
     case types.SET_IS_COPYING_PLAYLIST: {
       return { ...state, isCopying: action.payload };
