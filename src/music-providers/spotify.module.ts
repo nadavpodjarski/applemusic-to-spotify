@@ -30,7 +30,7 @@ const parsePlaylist = async ({ id, name: title, images }: any) => ({
   id,
   title,
   songs: await parsePlaylistSongs(id),
-  image: images[0].url,
+  image: images[0]?.url,
 });
 
 const parsePlaylistSongs = async (id: string) => {
@@ -50,7 +50,7 @@ export const layout = {
   style: {
     background:
       "linear-gradient(180deg, rgba(57,215,95,1) 0%, rgba(57,215,164,1) 100%)",
-    color: "white",
+    color: "black",
     fontFamily: "",
   },
   logo: SpotifyWithCircle,

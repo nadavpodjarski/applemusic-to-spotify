@@ -25,7 +25,7 @@ const Playlist = ({
   image,
 }: PlaylistType & { onCopy?: "" | ((id: string) => void) }) => {
   const classes = useStyles();
-  console.log("render", title);
+
   return (
     <List className={classes.root}>
       <PlaylistHeader {...{ onCopy, id, title, image, songs }} />

@@ -56,6 +56,7 @@ export const getPlaylists = async ({ token }: User): Promise<Playlist[]> => {
   });
 
   const { data } = await res.json();
+
   return await Promise.all(
     data.map(async (pls: any) => await parsePlaylist(pls))
   );

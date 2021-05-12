@@ -34,9 +34,10 @@ export const getSourcePlaylists = ({
 }) => async (dispatch: any) => {
   try {
     dispatch({ type: types.GET_SOURCE_PLAYLISTS });
-    const playlists = await musicProvidersConfig[provider].getPlaylists(
+    let playlists = await musicProvidersConfig[provider].getPlaylists(
       currentUser
     );
+    playlists = playlists.filter((pls) => !!pls.songs.length);
     dispatch(setSourcePlaylists({ playlists }));
   } catch (err) {
     console.warn(err);

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     padding: theme.spacing(2),
     boxSizing: "border-box",
-    gap: theme.spacing(2),
+    gap: theme.spacing(1.5),
     justifyContent: "center",
     userSelect: "none",
     boxShadow: theme.shadows[4],
@@ -39,7 +39,7 @@ const Title = ({ logo: Logo, displayName, side, style }: ITitle) => {
     return (
       <Typography
         color="textPrimary"
-        style={{ transform: "translateY(300px)" }}
+        style={{ transform: "translateY(200px)" }}
         variant="h4"
       >
         Choose your {side}
@@ -48,9 +48,9 @@ const Title = ({ logo: Logo, displayName, side, style }: ITitle) => {
 
   return (
     <div style={{ ...style }} className={classes.root}>
-      <span className={classes.logo}>
+      <Typography className={classes.logo}>
         <Logo />
-      </span>
+      </Typography>
       <Typography classes={{ root: classes.displayName }}>
         {displayName}
         <Typography
