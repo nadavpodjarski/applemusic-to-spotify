@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, useTheme } from "@material-ui/core";
 
 import LoginForm from "./LoginForm";
 import Appbar from "../components/Appbar";
@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     display: "grid",
     gridTemplateRows: "auto auto 1fr",
     overflow: "hidden",
+    background: theme.palette.background.default,
   },
   body: {
     overflowY: "auto",
@@ -31,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
 const Destination = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const theme = useTheme();
+
   const { currentUser, playlists, isLoading } = useSelector(
     (state) => state.destination
   );
@@ -52,17 +55,13 @@ const Destination = () => {
 
   return (
     <div className={classes.root}>
-      <Appbar
-        title="Destination"
-        logout={logoutHandler}
-        isLoggedIn={!!currentUser}
-      />
+      <Appbar title="" logout={logoutHandler} isLoggedIn={!!currentUser} />
       <Title {...{ ...layout, side: "Destination" }} />
       {currentUser && self ? (
         <>
           <div className={classes.body}>
             {isLoading ? (
-              <Loader />
+              <Loader color={theme.palette.text.secondary} />
             ) : (
               playlists?.map((playlist) => (
                 <Playlist {...{ ...playlist }} key={playlist.id} />

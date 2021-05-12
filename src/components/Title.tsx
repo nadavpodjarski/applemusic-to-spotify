@@ -35,7 +35,16 @@ const useStyles = makeStyles((theme) => ({
 const Title = ({ logo: Logo, displayName, side, style }: ITitle) => {
   const classes = useStyles();
 
-  if (!style || !displayName) return <div />;
+  if (!style || !displayName)
+    return (
+      <Typography
+        color="textPrimary"
+        style={{ transform: "translateY(300px)" }}
+        variant="h4"
+      >
+        Choose your {side}
+      </Typography>
+    );
 
   return (
     <div style={{ ...style }} className={classes.root}>

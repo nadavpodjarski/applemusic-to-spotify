@@ -12,6 +12,7 @@ import {
   ListItemText,
   ListItemIcon,
   Button,
+  useTheme,
 } from "@material-ui/core";
 
 import { Warning } from "@styled-icons/fluentui-system-filled/";
@@ -64,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 const StatusModal = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const {
     isStatusModalOpen,
@@ -94,7 +96,7 @@ const StatusModal = () => {
             <div className={classes.copyHeader}>
               <Typography>Copying {playlistToCopy?.title}</Typography>
             </div>
-            <Loader type="Rings" color="rgba(0,0,0,0.3)" />
+            <Loader type="Rings" color={theme.palette.text.secondary} />
           </>
         ) : (
           <>
