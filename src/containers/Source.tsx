@@ -49,7 +49,10 @@ const Source = () => {
     dispatch(actions.sourceLogout({ provider: self }));
 
   const copyPlaylistHandler = (id: string) =>
-    dispatch(actions.copyPlaylist(id));
+    destination && dispatch(actions.copyPlaylist(id));
+
+  const relevantMusicProviders = () =>
+    musicProviders.filter((provider) => provider !== destination);
 
   return (
     <div className={classes.root}>
@@ -69,7 +72,7 @@ const Source = () => {
                 <Playlist
                   {...{
                     ...playlist,
-                    onCopy: destination && copyPlaylistHandler,
+                    onCopy: copyPlaylistHandler,
                   }}
                   key={playlist.id}
                 />
@@ -79,9 +82,7 @@ const Source = () => {
         </>
       ) : (
         <LoginForm
-          relevantProviders={musicProviders.filter(
-            (provider) => provider !== destination
-          )}
+          relevantProviders={relevantMusicProviders()}
           loginHandler={loginHandler}
         />
       )}

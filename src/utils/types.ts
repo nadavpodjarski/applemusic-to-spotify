@@ -9,6 +9,13 @@ export interface IApp {
   destination: string;
 }
 
+export interface IStatus {
+  isCopying: boolean;
+  isStatusModalOpen: boolean;
+  playlistToCopy: Playlist | null;
+  failedCopySongs: Array<Song>;
+}
+
 export interface ISource {
   currentUser: any;
   playlists: Playlist[];
@@ -27,6 +34,7 @@ export interface IStore {
   app: IApp;
   source: ISource;
   destination: IDestination;
+  status: IStatus;
 }
 
 export type User = {
@@ -63,5 +71,9 @@ export interface IMusicProvider {
   login: () => Promise<User>;
   logout: () => void;
   getPlaylists: (currentUser: User) => Promise<Array<Playlist>>;
-  createPlaylist: (playlist: Playlist, currentUser: User) => Promise<any>;
+  createPlaylist: (
+    playlist: Playlist,
+    currentUser: User,
+    addFailedSong: (payload: any) => (dispatch: any) => any
+  ) => Promise<any>;
 }

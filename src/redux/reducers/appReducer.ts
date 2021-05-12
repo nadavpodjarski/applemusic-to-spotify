@@ -9,7 +9,7 @@ const initialState: IApp = {
   destination: "",
 };
 
-export const appReducer = (state = initialState, action: Action): IApp => {
+export const appReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case types.SET_DESTINATION_PROVIDER: {
       const { provider: destination } = action.payload;

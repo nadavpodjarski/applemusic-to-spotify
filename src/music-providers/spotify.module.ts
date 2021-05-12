@@ -1,5 +1,6 @@
 import { SpotifyWithCircle } from "@styled-icons/entypo-social";
 import { User, Playlist, cleanStringFromSpecialChar } from "../utils";
+
 import SpotifyWebApi from "spotify-web-api-js";
 
 const SCOPES = [
@@ -95,7 +96,11 @@ export const getPlaylists = async ({ id }: User): Promise<Playlist[]> => {
   );
 };
 
-export const createPlaylist = async (playlist: Playlist, { id }: User) => {
+export const createPlaylist = async (
+  playlist: Playlist,
+  { id }: User,
+  addFailedCopySong: (payload: any) => (dispatch: any) => any
+): Promise<Playlist> => {
   const newPlaylist = await spotifyWebApi.createPlaylist(id, {
     name: playlist.title,
     public: true,
@@ -112,7 +117,7 @@ export const createPlaylist = async (playlist: Playlist, { id }: User) => {
         )} ${cleanStringFromSpecialChar(song.name)}`
       );
 
-      if (!items[0]?.uri) alert(`Couldnt find ${song.artist} ${song.name}`);
+      if (!items[0]?.uri) addFailedCopySong(song);
       return items[0]?.uri;
     })
   );

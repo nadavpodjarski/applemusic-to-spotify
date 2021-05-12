@@ -37,11 +37,30 @@ export const copyPlaylist = (playlistIdFromSource: string) => async (
 
   const playlist = playlists.find((pls) => pls.id === playlistIdFromSource);
   if (playlist) {
-    dispatch({ type: types.COPY_PLAYLIST });
+    dispatch({ type: types.COPY_PLAYLIST, payload: playlist });
     const res = await musicProvidersConfig[destination].createPlaylist(
       playlist,
-      currentUser
+      currentUser,
+      addFailedCopySong
     );
-    res && dispatch(addPlaylistToDestination(res));
+    if (res) {
+      dispatch(addPlaylistToDestination(res));
+      dispatch(setIsCopyinPlaylist(false));
+    }
   }
 };
+
+export const closeStatusModal = () => ({
+  type: types.CLOSE_STATUS_MODAL,
+});
+
+export const setIsCopyinPlaylist = (payload: any) => ({
+  type: types.SET_IS_COPYING_PLAYLIST,
+  payload,
+});
+
+export const addFailedCopySong = (payload: any) => (dispatch: any) =>
+  dispatch({
+    type: types.ADD_FAILED_SONG_COPY,
+    payload,
+  });

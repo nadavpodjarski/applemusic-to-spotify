@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ListItem, makeStyles, Tooltip } from "@material-ui/core";
+import { ListItem, makeStyles, Tooltip, Typography } from "@material-ui/core";
 import { SendCopy } from "@styled-icons/fluentui-system-filled/";
 import { Song, convertMilliseconds } from "../utils";
 
@@ -61,20 +61,21 @@ const PlaylistHeader = ({
   return (
     <ListItem divider className={classes.title}>
       <img src={image} alt="" className={classes.image} />
-
       <div className={classes.text}>
-        <span>{title}</span>
+        <Typography component="span">{title}</Typography>
         <div>
-          <span>{totalSongs} songs, </span>
-          <span>{convertMilliseconds(totalDuration, true)}</span>
+          <Typography component="span">{totalSongs} songs, </Typography>
+          <Typography component="span">
+            {convertMilliseconds(totalDuration, true)}
+          </Typography>
         </div>
       </div>
 
       {onCopy && (
         <Tooltip title="Copy Playlist">
-          <span className={classes.copyButton}>
+          <Typography component="span" className={classes.copyButton}>
             <SendCopy onClick={() => onCopy(id)} />
-          </span>
+          </Typography>
         </Tooltip>
       )}
     </ListItem>

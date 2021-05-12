@@ -18,6 +18,11 @@ export let theme = createMuiTheme({
         fontFamily: "Poppins",
       },
     },
+    MuiDialog: {
+      root: {
+        fontFamily: "Poppins",
+      },
+    },
   },
 });
 

@@ -29,7 +29,7 @@ export const convertMilliseconds = (
   if (literal) {
     return `${hours ? `${hours} hours ` : ""}${
       minutes ? `${minutes} min ` : ""
-    }${seconds} seconds`;
+    }${seconds ? `${seconds} seconds` : ""}`;
   }
   return `${!!hours ? addZero(hours) + ":" : ""}${
     minutes ? addZero(minutes) + ":" : ""

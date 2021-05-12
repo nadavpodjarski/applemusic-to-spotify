@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 const Destination = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-
   const { currentUser, playlists, isLoading } = useSelector(
     (state) => state.destination
   );
@@ -47,6 +46,9 @@ const Destination = () => {
 
   const logoutHandler = () =>
     dispatch(actions.destinationLogout({ provider: self }));
+
+  const relevantMusicProviders = () =>
+    musicProviders.filter((provider) => provider !== source);
 
   return (
     <div className={classes.root}>
@@ -70,9 +72,7 @@ const Destination = () => {
         </>
       ) : (
         <LoginForm
-          relevantProviders={musicProviders.filter(
-            (provider) => provider !== source
-          )}
+          relevantProviders={relevantMusicProviders()}
           loginHandler={loginHandler}
         />
       )}

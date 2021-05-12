@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { List, makeStyles } from "@material-ui/core";
 
 import { Playlist as PlaylistType } from "../utils";
@@ -24,14 +25,20 @@ const Playlist = ({
   image,
 }: PlaylistType & { onCopy?: "" | ((id: string) => void) }) => {
   const classes = useStyles();
+  console.log("render", title);
   return (
     <List className={classes.root}>
       <PlaylistHeader {...{ onCopy, id, title, image, songs }} />
       {songs.map((song) => (
-        <Song {...{ ...song }} />
+        <Song {...{ ...song }} key={title + song.id + Date.now()} />
       ))}
     </List>
   );
 };
 
-export default Playlist;
+const playlistPropsAreEqual = (
+  prevProps: PlaylistType,
+  nextProps: PlaylistType
+) => prevProps.title === nextProps.title;
+
+export default memo(Playlist, playlistPropsAreEqual);

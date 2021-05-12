@@ -1,10 +1,29 @@
-import { CircularProgress } from "@material-ui/core";
+import LoaderSpinner from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 type LoaderType = {
   color?: string;
+  type?:
+    | "Bars"
+    | "Audio"
+    | "BallTriangle"
+    | "Circles"
+    | "Grid"
+    | "Hearts"
+    | "Oval"
+    | "Puff"
+    | "Rings"
+    | "TailSpin"
+    | "ThreeDots"
+    | "Watch"
+    | "RevolvingDot"
+    | "Triangle"
+    | "Plane"
+    | "MutatingDots"
+    | "CradleLoader";
 };
 
-const Loader = ({ color }: LoaderType) => {
+const Loader = ({ color, type }: LoaderType) => {
   return (
     <div
       style={{
@@ -16,7 +35,12 @@ const Loader = ({ color }: LoaderType) => {
         color: color || "black",
       }}
     >
-      <CircularProgress color="inherit" />
+      <LoaderSpinner
+        type={type || "Bars"}
+        height={100}
+        width={100}
+        color={color || "inherit"}
+      />
     </div>
   );
 };

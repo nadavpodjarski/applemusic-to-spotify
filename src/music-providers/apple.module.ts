@@ -2,6 +2,7 @@ import { Applemusic } from "@styled-icons/simple-icons/";
 import { Playlist, User } from "../utils";
 
 const API_URL = "https://api.music.apple.com/v1/me/library/playlists";
+const APPLEMUSIC_LOGO = `https://is1-ssl.mzstatic.com/image/thumb/Features127/v4/75/f9/6f/75f96fa5-99ca-0854-3aae-8f76f5cb7fb5/source/600x600bb.jpeg`;
 
 export const initAppleMusicKit = () => {
   document.addEventListener("musickitloaded", function () {
@@ -30,7 +31,7 @@ export const layout = {
 
 export const login = async (): Promise<User> => {
   //@ts-ignore
-  const music = MusicKit ? MusicKit.getInstance() : "";
+  const music = MusicKit.getInstance();
   const token = await music.authorize();
 
   return { token, id: "" };
@@ -38,7 +39,7 @@ export const login = async (): Promise<User> => {
 
 export const logout = () => {
   //@ts-ignore
-  const music = MusicKit ? MusicKit.getInstance() : "";
+  const music = MusicKit.getInstance();
   music.unauthorize();
 };
 
@@ -60,9 +61,21 @@ export const getPlaylists = async ({ token }: User): Promise<Playlist[]> => {
   );
 };
 
+const handleMediaItem = (payload: {
+  url: string;
+  height: number;
+  width: number;
+}) => {
+  const { url, height, width } = payload;
+  if (!url) return APPLEMUSIC_LOGO;
+  let newString = url.replace("{h}", `${height}`);
+  newString = newString.replace("{w}", `${width}`);
+  return newString;
+};
+
 const parsePlaylist = async (playlist: any): Promise<Playlist> => {
   //@ts-ignore
-  const music = MusicKit ? MusicKit.getInstance() : "";
+  const music = MusicKit.getInstance();
 
   const { name: title } = playlist.attributes;
   const { id } = playlist;
@@ -70,16 +83,22 @@ const parsePlaylist = async (playlist: any): Promise<Playlist> => {
   const pls = await (id.startsWith("p.")
     ? music.api.library.playlist(id)
     : music.api.playlist(id));
-  console.log(pls);
+
   const songs = pls.relationships.tracks.data.map(
     ({ attributes, id }: any) => ({
       artist: attributes.artistName,
       name: attributes.name,
       id,
-      image: attributes.artwork.url,
+      image: handleMediaItem(attributes.artwork),
+      duration: attributes.durationInMillis,
     })
   );
-  return { title, songs, id };
+  return {
+    title,
+    songs,
+    id,
+    image: handleMediaItem({ url: "", height: 0, width: 0 }),
+  };
 };
 
 export const createPlaylist = async (playlist: Playlist, currentUser: User) => {
