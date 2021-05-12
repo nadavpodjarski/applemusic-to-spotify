@@ -14,7 +14,6 @@ import {
   Button,
 } from "@material-ui/core";
 
-import { Close } from "@styled-icons/evaicons-solid";
 import { Warning } from "@styled-icons/fluentui-system-filled/";
 import { BadgeCheck } from "@styled-icons/boxicons-regular/";
 
@@ -81,6 +80,7 @@ const StatusModal = () => {
     () =>
       playlistToCopy?.songs &&
       playlistToCopy?.songs?.length - failedCopySongs?.length,
+    // eslint-disable-next-line
     [isCopying]
   );
 
