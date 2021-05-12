@@ -74,6 +74,6 @@ export interface IMusicProvider {
   createPlaylist: (
     playlist: Playlist,
     currentUser: User,
-    addFailedSong: (payload: any) => (dispatch: any) => any
+    addFailedSong: (payload: Song) => Song
   ) => Promise<any>;
 }
