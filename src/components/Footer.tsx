@@ -1,6 +1,50 @@
-import { Paper } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
+import { Github } from "@styled-icons/bootstrap/";
+import { Lock } from "@styled-icons/boxicons-regular/";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    boxShadow: theme.shadows[2],
+    height: 36,
+    padding: theme.spacing(1),
+    boxSizing: "border-box",
+    display: "flex",
+    justifyContent: "space-around",
+  },
+  icon: {
+    height: 24,
+    width: 24,
+    color: theme.palette.text.primary,
+    "&:hover": {
+      color: theme.palette.text.secondary,
+    },
+    cursor: "default",
+  },
+  iconPhrase: {
+    display: "flex",
+    gap: theme.spacing(1),
+    color: theme.palette.text.secondary,
+  },
+}));
 const Footer = () => {
-  return <Paper elevation={4} style={{ height: 48 }}></Paper>;
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      <div className={classes.iconPhrase}>
+        <Lock className={classes.icon} />
+        <Typography>Secure authentication via Apple.com</Typography>
+      </div>
+      <div className={classes.iconPhrase}>
+        <Typography>Made by</Typography>
+        <a
+          href="https://github.com/nadavpodjarski/applemusic-to-spotify"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Github className={classes.icon} />
+        </a>
+      </div>
+    </div>
+  );
 };
 export default Footer;
