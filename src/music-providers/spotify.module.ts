@@ -22,7 +22,8 @@ const SCOPES = [
 ].join("%20");
 
 const REDIRECT_URI = `${window.location.origin}/spotify-interceptor`;
-const AUTHORIZE_URI = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}&show_dialog=false`;
+const AUTHORIZE_URI = (withDialog: boolean) =>
+  `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}&show_dialog=${withDialog}`;
 
 const spotifyWebApi = new SpotifyWebApi();
 
@@ -57,7 +58,7 @@ export const layout = {
   displayName: "Spotify",
 };
 
-export const login = async (): Promise<User> => {
+export const login = async (isAutoLogin?: boolean): Promise<User> => {
   //POPUP WINDOW DIMENSIONS
   const width = 700;
   const height = 600;
@@ -75,7 +76,7 @@ export const login = async (): Promise<User> => {
       }
     };
     const popup = window?.open(
-      AUTHORIZE_URI,
+      AUTHORIZE_URI(!isAutoLogin),
       "Spotify Login",
       `width=${width},height=${height},right=${right},top=${top}`
     );
