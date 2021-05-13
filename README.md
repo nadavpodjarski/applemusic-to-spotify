@@ -1,4 +1,6 @@
-# Intro
+# Playswish.co
+
+## Intro
 
 #### Switch between music providers can be painfull proccess, This project aims to help ppl move their playlists from one music provider to another.
 

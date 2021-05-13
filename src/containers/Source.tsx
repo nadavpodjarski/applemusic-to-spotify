@@ -38,9 +38,11 @@ const Source = () => {
     (state) => state.source
   );
 
-  const { destination, musicProviders, source: self } = useSelector(
-    (state) => state.app
-  );
+  const {
+    destination,
+    musicProviders,
+    source: self,
+  } = useSelector((state) => state.app);
 
   const layout = useMemo(() => getProviderLayout({ provider: self }), [self]);
 

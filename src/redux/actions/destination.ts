@@ -26,56 +26,48 @@ export const setDestinationPlaylists = (payload: any) => ({
   payload,
 });
 
-export const getDestinationPlaylists = ({
-  provider,
-  currentUser,
-}: {
-  provider: string;
-  currentUser: User;
-}) => async (dispatch: any) => {
-  try {
-    dispatch({ type: types.GET_DESTINATION_PLAYLISTS });
-    let playlists = await musicProvidersConfig[provider].getPlaylists(
-      currentUser
-    );
-    playlists = playlists.filter((pls) => !!pls.songs.length);
-    dispatch(setDestinationPlaylists({ playlists }));
-  } catch (err) {
-    console.warn(err);
-    dispatch(requestErr({ err }));
-  }
-};
+export const getDestinationPlaylists =
+  ({ provider, currentUser }: { provider: string; currentUser: User }) =>
+  async (dispatch: any) => {
+    try {
+      dispatch({ type: types.GET_DESTINATION_PLAYLISTS });
+      let playlists = await musicProvidersConfig[provider].getPlaylists(
+        currentUser
+      );
+      playlists = playlists.filter((pls) => !!pls.songs.length);
+      dispatch(setDestinationPlaylists({ playlists }));
+    } catch (err) {
+      console.warn(err);
+      dispatch(requestErr({ err }));
+    }
+  };
 
-export const destinationLogin = ({
-  provider,
-}: {
-  [key: string]: string;
-}) => async (dispatch: any) => {
-  try {
-    dispatch(login());
-    const currentUser = await musicProvidersConfig[provider].login();
-    if (!currentUser) return;
-    dispatch(actions.setDestinationProvider({ provider }));
-    dispatch(setDestinationCurrentUser({ currentUser }));
-    dispatch(getDestinationPlaylists({ provider, currentUser }));
-  } catch (err) {
-    console.warn(err);
-    dispatch(requestErr({ err }));
-  }
-};
+export const destinationLogin =
+  ({ provider }: { [key: string]: string }) =>
+  async (dispatch: any) => {
+    try {
+      dispatch(login());
+      const currentUser = await musicProvidersConfig[provider].login();
+      if (!currentUser) return;
+      dispatch(actions.setDestinationProvider({ provider }));
+      dispatch(setDestinationCurrentUser({ currentUser }));
+      dispatch(getDestinationPlaylists({ provider, currentUser }));
+    } catch (err) {
+      console.warn(err);
+      dispatch(requestErr({ err }));
+    }
+  };
 
-export const destinationLogout = ({
-  provider,
-}: {
-  [key: string]: string;
-}) => async (dispatch: any) => {
-  try {
-    await musicProvidersConfig[provider].logout();
-    localStorage.removeItem(DESTINATION_LOCAL_STORGAE_KEY);
-    dispatch({ type: types.DESTINATION_LOGOUT });
-    dispatch(actions.setDestinationProvider({ provider: "" }));
-  } catch (err) {
-    console.warn(err);
-    dispatch(requestErr({ err }));
-  }
-};
+export const destinationLogout =
+  ({ provider }: { [key: string]: string }) =>
+  async (dispatch: any) => {
+    try {
+      await musicProvidersConfig[provider].logout();
+      localStorage.removeItem(DESTINATION_LOCAL_STORGAE_KEY);
+      dispatch({ type: types.DESTINATION_LOGOUT });
+      dispatch(actions.setDestinationProvider({ provider: "" }));
+    } catch (err) {
+      console.warn(err);
+      dispatch(requestErr({ err }));
+    }
+  };

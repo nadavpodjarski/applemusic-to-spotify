@@ -25,52 +25,48 @@ export const setSourcePlaylists = (payload: any) => ({
   payload,
 });
 
-export const getSourcePlaylists = ({
-  provider,
-  currentUser,
-}: {
-  provider: string;
-  currentUser: User;
-}) => async (dispatch: any) => {
-  try {
-    dispatch({ type: types.GET_SOURCE_PLAYLISTS });
-    let playlists = await musicProvidersConfig[provider].getPlaylists(
-      currentUser
-    );
-    playlists = playlists.filter((pls) => !!pls.songs.length);
-    dispatch(setSourcePlaylists({ playlists }));
-  } catch (err) {
-    console.warn(err);
-    dispatch(requestErr({ err }));
-  }
-};
+export const getSourcePlaylists =
+  ({ provider, currentUser }: { provider: string; currentUser: User }) =>
+  async (dispatch: any) => {
+    try {
+      dispatch({ type: types.GET_SOURCE_PLAYLISTS });
+      let playlists = await musicProvidersConfig[provider].getPlaylists(
+        currentUser
+      );
+      playlists = playlists.filter((pls) => !!pls.songs.length);
+      dispatch(setSourcePlaylists({ playlists }));
+    } catch (err) {
+      console.warn(err);
+      dispatch(requestErr({ err }));
+    }
+  };
 
-export const sourceLogin = ({ provider }: { [key: string]: string }) => async (
-  dispatch: any
-) => {
-  try {
-    dispatch(login());
-    const currentUser = await musicProvidersConfig[provider].login();
-    if (!currentUser) return;
-    dispatch(actions.setSourceProvider({ provider }));
-    dispatch(setSourceCurrentUser({ currentUser }));
-    dispatch(getSourcePlaylists({ provider, currentUser }));
-  } catch (err) {
-    console.warn(err);
-    dispatch(requestErr({ err }));
-  }
-};
+export const sourceLogin =
+  ({ provider }: { [key: string]: string }) =>
+  async (dispatch: any) => {
+    try {
+      dispatch(login());
+      const currentUser = await musicProvidersConfig[provider].login();
+      if (!currentUser) return;
+      dispatch(actions.setSourceProvider({ provider }));
+      dispatch(setSourceCurrentUser({ currentUser }));
+      dispatch(getSourcePlaylists({ provider, currentUser }));
+    } catch (err) {
+      console.warn(err);
+      dispatch(requestErr({ err }));
+    }
+  };
 
-export const sourceLogout = ({ provider }: { [key: string]: string }) => async (
-  dispatch: any
-) => {
-  try {
-    await musicProvidersConfig[provider].logout();
-    localStorage.removeItem(SOURCE_LOCAL_STORAGE_KEY);
-    dispatch({ type: types.SOURCE_LOGOUT });
-    dispatch(actions.setSourceProvider({ provider: "" }));
-  } catch (err) {
-    console.warn(err);
-    dispatch(requestErr({ err }));
-  }
-};
+export const sourceLogout =
+  ({ provider }: { [key: string]: string }) =>
+  async (dispatch: any) => {
+    try {
+      await musicProvidersConfig[provider].logout();
+      localStorage.removeItem(SOURCE_LOCAL_STORAGE_KEY);
+      dispatch({ type: types.SOURCE_LOGOUT });
+      dispatch(actions.setSourceProvider({ provider: "" }));
+    } catch (err) {
+      console.warn(err);
+      dispatch(requestErr({ err }));
+    }
+  };
