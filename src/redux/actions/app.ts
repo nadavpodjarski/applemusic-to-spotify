@@ -25,30 +25,29 @@ const addPlaylistToDestination = (payload: Playlist) => ({
   payload,
 });
 
-export const copyPlaylist = (playlistIdFromSource: string) => async (
-  dispatch: any,
-  getStore: () => IStore
-) => {
-  const {
-    app: { destination },
-    destination: { currentUser },
-    source: { playlists },
-  } = getStore();
-  if (!currentUser) return;
-  const playlist = playlists.find((pls) => pls.id === playlistIdFromSource);
-  if (playlist) {
-    dispatch({ type: types.COPY_PLAYLIST, payload: playlist });
-    const res = await musicProvidersConfig[destination].createPlaylist(
-      playlist,
-      currentUser,
-      addFailedCopySong(dispatch)
-    );
-    if (res) {
-      dispatch(addPlaylistToDestination(res));
-      dispatch(setIsCopyinPlaylist(false));
+export const copyPlaylist =
+  (playlistIdFromSource: string) =>
+  async (dispatch: any, getStore: () => IStore) => {
+    const {
+      app: { destination },
+      destination: { currentUser },
+      source: { playlists },
+    } = getStore();
+    if (!currentUser) return;
+    const playlist = playlists.find((pls) => pls.id === playlistIdFromSource);
+    if (playlist) {
+      dispatch({ type: types.COPY_PLAYLIST, payload: playlist });
+      const res = await musicProvidersConfig[destination].createPlaylist(
+        playlist,
+        currentUser,
+        addFailedCopySong(dispatch)
+      );
+      if (res) {
+        dispatch(addPlaylistToDestination(res));
+        dispatch(setIsCopyinPlaylist(false));
+      }
     }
-  }
-};
+  };
 
 export const closeStatusModal = () => ({
   type: types.CLOSE_STATUS_MODAL,
@@ -61,6 +60,6 @@ export const setIsCopyinPlaylist = (payload: any) => ({
 
 export const addFailedCopySong = (dispatch: any) => (payload: any) =>
   dispatch({
-    type: types.ADD_FAILED_SONG_COPY,
+    type: types.ADD_FAILED_COPY_SONG,
     payload,
   });

@@ -31,7 +31,7 @@ export const statusReducer = (state = initialState, action: Action) => {
     case types.SET_IS_COPYING_PLAYLIST: {
       return { ...state, isCopying: action.payload };
     }
-    case types.ADD_FAILED_SONG_COPY: {
+    case types.ADD_FAILED_COPY_SONG: {
       return {
         ...state,
         failedCopySongs: [...state.failedCopySongs, action.payload],

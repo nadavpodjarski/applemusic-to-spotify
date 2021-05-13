@@ -15,7 +15,7 @@ export const getProviderLayout = ({ provider }: { [key: string]: string }) =>
 
 export const cleanStringFromSpecialChar = (str: string) =>
   // eslint-disable-next-line
-  str.replace(/[&\/\\#,+()$~%.'":*?<>{}]/gi, " ");
+  str.replaceAll(/[&\/\\#,+()$~%.'":*?<>{}]/gi, " ");
 
 export const convertMilliseconds = (
   duration: number,
@@ -32,7 +32,7 @@ export const convertMilliseconds = (
       minutes ? `${minutes} min ` : ""
     }${seconds ? `${seconds} seconds` : ""}`;
   }
-  return `${!!hours ? addZero(hours) + ":" : ""}${
+  return `${hours ? addZero(hours) + ":" : ""}${
     minutes ? addZero(minutes) + ":" : ""
   }${addZero(seconds)}`;
 };
