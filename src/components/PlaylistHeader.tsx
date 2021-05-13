@@ -15,9 +15,11 @@ const useStyles = makeStyles((theme) => ({
   copyButton: {
     height: 24,
     width: 24,
-    cursor: "pointer",
     marginLeft: "auto",
     color: theme.palette.text.primary,
+    "&:hover": {
+      color: theme.palette.text.secondary,
+    },
   },
 
   title: {

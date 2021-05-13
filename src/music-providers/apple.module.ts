@@ -33,7 +33,6 @@ export const login = async (): Promise<User> => {
   //@ts-ignore
   const music = MusicKit.getInstance();
   const token = await music.authorize();
-
   return { token, id: "" };
 };
 

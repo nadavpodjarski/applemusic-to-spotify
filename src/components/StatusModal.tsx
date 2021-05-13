@@ -48,7 +48,9 @@ const useStyles = makeStyles((theme) => ({
     height: 24,
     width: 24,
     color: theme.palette.text.primary,
-    cursor: "pointer",
+    "&:hover": {
+      color: theme.palette.text.secondary,
+    },
   },
   warning: {
     height: 24,
@@ -135,7 +137,7 @@ const StatusModal = () => {
                     </ListItemIcon>
                   </ListItem>
                   {failedCopySongs?.map((song) => (
-                    <ListItem divider>
+                    <ListItem divider key={song.id}>
                       <ListItemIcon className={classes.listIcon}>
                         <Warning className={classes.warning} />
                       </ListItemIcon>

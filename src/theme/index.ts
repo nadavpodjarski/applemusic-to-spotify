@@ -8,7 +8,7 @@ export let theme = createMuiTheme({
     button: {
       textTransform: "none",
     },
-    fontFamily: "Poppins",
+    fontFamily: "Lato",
   },
   overrides: {
     MuiTooltip: {
