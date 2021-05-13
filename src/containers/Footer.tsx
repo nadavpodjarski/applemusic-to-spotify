@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     display: "flex",
     justifyContent: "space-around",
+    background: theme.palette.background.paper,
   },
   icon: {
     height: 24,

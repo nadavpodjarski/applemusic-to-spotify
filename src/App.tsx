@@ -5,7 +5,7 @@ import "./App.css";
 import Source from "./containers/Source";
 import Destination from "./containers/Destination";
 import StatusModal from "./components/StatusModal";
-import Footer from "./components/Footer";
+import Footer from "./containers/Footer";
 
 import { Divider, makeStyles } from "@material-ui/core";
 import { initAppleMusicKit } from "./music-providers/apple.module";
