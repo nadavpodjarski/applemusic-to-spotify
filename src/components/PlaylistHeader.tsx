@@ -3,7 +3,7 @@ import { ListItem, makeStyles, Tooltip, Typography } from "@material-ui/core";
 import { SendCopy } from "@styled-icons/fluentui-system-filled/";
 import { Song, convertMilliseconds } from "../utils";
 
-type PlaylistHeaderType = {
+type PlaylistHeaderProps = {
   title: string;
   id: string;
   onCopy?: "" | ((id: string) => void);
@@ -47,7 +47,7 @@ const PlaylistHeader = ({
   id,
   image,
   songs,
-}: PlaylistHeaderType) => {
+}: PlaylistHeaderProps) => {
   const classes = useStyles();
 
   const [totalSongs, totalDuration] = useMemo(() => {

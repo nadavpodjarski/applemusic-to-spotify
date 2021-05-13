@@ -1,4 +1,4 @@
-import { Song as SongType, convertMilliseconds } from "../utils";
+import { Song as SongProps, convertMilliseconds } from "../utils";
 import { ListItem, Typography, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Song = ({ artist, duration, image, name, id }: SongType) => {
+const Song = ({ artist, duration, image, name, id }: SongProps) => {
   const classes = useStyles();
   return (
     <ListItem divider button dense key={id} className={classes.item}>

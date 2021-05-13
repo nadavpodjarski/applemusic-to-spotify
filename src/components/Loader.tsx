@@ -1,7 +1,7 @@
 import LoaderSpinner from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-type LoaderType = {
+type LoaderProps = {
   color?: string;
   type?:
     | "Bars"
@@ -23,7 +23,7 @@ type LoaderType = {
     | "CradleLoader";
 };
 
-const Loader = ({ color, type }: LoaderType) => {
+const Loader = ({ color, type }: LoaderProps) => {
   return (
     <div
       style={{

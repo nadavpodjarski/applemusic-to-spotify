@@ -1,12 +1,12 @@
 import { CSSProperties } from "react";
 import { makeStyles, Typography } from "@material-ui/core";
 
-interface ILogin {
+type LoginProps = {
   login: () => void;
   logo: any;
   style: Pick<CSSProperties, "background" | "color" | "fontFamily">;
   displayName: string;
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = ({ login, logo: Logo, style, displayName }: ILogin) => {
+const Login = ({ login, logo: Logo, style, displayName }: LoginProps) => {
   const classes = useStyles(style);
   return (
     <div className={classes.root} onClick={login}>

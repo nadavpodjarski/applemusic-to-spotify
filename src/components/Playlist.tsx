@@ -6,6 +6,10 @@ import { Playlist as PlaylistType } from "../utils";
 import Song from "./Song";
 import PlaylistHeader from "./PlaylistHeader";
 
+type PlaylistProps = {
+  onCopy?: "" | ((id: string) => void);
+} & PlaylistType;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.palette.background.paper,
@@ -17,13 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Playlist = ({
-  songs,
-  title,
-  id,
-  onCopy,
-  image,
-}: PlaylistType & { onCopy?: "" | ((id: string) => void) }) => {
+const Playlist = ({ songs, title, id, onCopy, image }: PlaylistProps) => {
   const classes = useStyles();
 
   return (

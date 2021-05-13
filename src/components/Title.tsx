@@ -1,6 +1,6 @@
 import { makeStyles, Typography } from "@material-ui/core";
 
-interface ITitle {
+type TitleProps = {
   logo: any;
   displayName: string;
   side: string;
@@ -8,7 +8,7 @@ interface ITitle {
     background: string;
     color: string;
   };
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   side: {},
 }));
 
-const Title = ({ logo: Logo, displayName, side, style }: ITitle) => {
+const Title = ({ logo: Logo, displayName, side, style }: TitleProps) => {
   const classes = useStyles();
 
   if (!style || !displayName)
