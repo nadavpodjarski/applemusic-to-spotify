@@ -26,13 +26,14 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
 }));
+
 const Footer = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <div className={classes.iconPhrase}>
-        <Lock className={classes.icon} />
-        <Typography>Secure authentication via Apple.com</Typography>
+        {/* <Lock className={classes.icon} /> */}
+        {/* <Typography>Secure authentication via Apple.com</Typography> */}
       </div>
       <div className={classes.iconPhrase}>
         <Typography>Made by</Typography>
