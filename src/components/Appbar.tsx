@@ -1,6 +1,6 @@
 import { Typography, Button, makeStyles } from "@material-ui/core";
 
-interface IHeader {
+interface AppbarProps {
   title: string;
   logout: () => void;
   isLoggedIn: boolean;
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Appbar = ({ title, logout, isLoggedIn }: IHeader) => {
+const Appbar = ({ title, logout, isLoggedIn }: AppbarProps) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
