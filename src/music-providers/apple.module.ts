@@ -61,6 +61,8 @@ export const getPlaylists = async ({ token }: User): Promise<Playlist[]> => {
   );
 };
 
+export const fialedSearchRedirectUri = (str: string) => "";
+
 const handleMediaItem = (payload: {
   url: string;
   height: number;

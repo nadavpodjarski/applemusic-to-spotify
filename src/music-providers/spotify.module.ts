@@ -131,4 +131,7 @@ export const createPlaylist = async (
   return parsePlaylist(res);
 };
 
+export const fialedSearchRedirectUri = (str: string) =>
+  `https://open.spotify.com/search/${str}`;
+
 export const logout = () => {};

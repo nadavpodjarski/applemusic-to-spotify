@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../redux/actions";
 
@@ -10,18 +9,14 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemIcon,
   Button,
   useTheme,
-  Tooltip,
 } from "@material-ui/core";
 
 import Loader from "./Loader";
+import FailedCopySong from "./FailedCopySong";
 
-import { Warning } from "@styled-icons/fluentui-system-filled/";
 import { BadgeCheck } from "@styled-icons/boxicons-regular/";
-import { Copy } from "@styled-icons/boxicons-regular/";
-import { Open } from "@styled-icons/ionicons-outline/";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,19 +39,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
   },
-  iconButton: {
-    height: 24,
-    width: 24,
-    color: theme.palette.text.primary,
-    "&:hover": {
-      color: theme.palette.text.secondary,
-    },
-  },
-  warning: {
-    height: 24,
-    width: 24,
-    color: theme.palette.warning.main,
-  },
+
   list: {
     width: "100%",
   },
@@ -84,7 +67,6 @@ const StatusModal = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const theme = useTheme();
-
   const {
     isStatusModalOpen,
     isCopying,
@@ -130,28 +112,9 @@ const StatusModal = () => {
                 <List className={classes.list}>
                   <ListItem component="span">
                     <ListItemText>Failed to copy</ListItemText>
-                    <ListItemIcon className={classes.listIcon}>
-                      <Tooltip title="Go to website" placement="top">
-                        <Open className={classes.iconButton} />
-                      </Tooltip>
-                    </ListItemIcon>
                   </ListItem>
                   {failedCopySongs?.map((song) => (
-                    <ListItem divider key={song.id}>
-                      <ListItemIcon className={classes.listIcon}>
-                        <Warning className={classes.warning} />
-                      </ListItemIcon>
-                      <ListItemText>
-                        {song.name} {song.artist}
-                      </ListItemText>
-                      <ListItemIcon className={classes.listIcon}>
-                        <CopyToClipboard text={`${song.artist} ${song.name}`}>
-                          <Tooltip title="Copy song" placement="top">
-                            <Copy className={classes.iconButton} />
-                          </Tooltip>
-                        </CopyToClipboard>
-                      </ListItemIcon>
-                    </ListItem>
+                    <FailedCopySong {...{ song }} />
                   ))}
                 </List>
               </>

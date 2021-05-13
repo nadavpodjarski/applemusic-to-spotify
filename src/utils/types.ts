@@ -76,4 +76,5 @@ export interface IMusicProvider {
     currentUser: User,
     addFailedSong: (payload: Song) => Song
   ) => Promise<any>;
+  fialedSearchRedirectUri: (uri: string) => string;
 }
