@@ -1,6 +1,5 @@
 import { makeStyles, Typography } from "@material-ui/core";
 import { Github } from "@styled-icons/bootstrap/";
-import { Lock } from "@styled-icons/boxicons-regular/";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,8 +8,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     boxSizing: "border-box",
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "center",
     background: theme.palette.background.paper,
+    userSelect: "none",
   },
   icon: {
     height: 24,
@@ -32,10 +32,6 @@ const Footer = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.iconPhrase}>
-        {/* <Lock className={classes.icon} /> */}
-        {/* <Typography>Secure authentication via Apple.com</Typography> */}
-      </div>
       <div className={classes.iconPhrase}>
         <Typography>Made by</Typography>
         <a
