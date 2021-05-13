@@ -33,7 +33,7 @@ To add more music provider simply follow the next steps
 
 2. implement and export IMusicProvider interface that can be found at `src/utils/types` in your new file.
 
-3. export your new file from `src/music-providers/index` <br/> I.E `export * as music_provider from ./your/your_file.module`
+3. export your new file from `src/music-providers/index` <br/> I.E `export * as music_provider from ./your_file.module`
 
 4. Your good to go !
 
