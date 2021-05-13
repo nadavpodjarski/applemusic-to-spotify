@@ -26,6 +26,8 @@ use the following command
 
 4. start project using following command `npm start`
 
+[![](http://img.youtube.com/vi/bruZE_iZXW8/0.jpg)](http://www.youtube.com/watch?v=bruZE_iZXW8)
+
 ## Adding Music Provider
 
 To add more music provider simply follow the next steps
