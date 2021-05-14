@@ -5,7 +5,6 @@ import {
   makeStyles,
   ListItemText,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { musicProvidersConfig, Song } from "../utils";
@@ -16,12 +15,13 @@ import { Open } from "@styled-icons/ionicons-outline/";
 
 type FailedSongProps = {
   song: Song;
+  provider: string;
 };
 
 const useStyles = makeStyles((theme) => ({
   iconButton: {
-    height: 24,
-    width: 24,
+    height: 20,
+    width: 20,
     color: theme.palette.text.primary,
     "&:hover": {
       color: theme.palette.text.secondary,
@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
     cursor: "default",
   },
   warning: {
-    height: 24,
-    width: 24,
+    height: 20,
+    width: 20,
     color: theme.palette.warning.main,
   },
   list: {
@@ -43,12 +43,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FailedCopySong = ({ song }: FailedSongProps) => {
+const FailedCopySong = ({ song, provider }: FailedSongProps) => {
   const classes = useStyles();
-  const { destination } = useSelector((state) => state.app);
 
   return (
-    <ListItem divider key={song.id}>
+    <ListItem dense divider key={song.id}>
       <ListItemIcon className={classes.listIcon}>
         <Warning className={classes.warning} />
       </ListItemIcon>
@@ -67,7 +66,7 @@ const FailedCopySong = ({ song }: FailedSongProps) => {
           <a
             target="_blank"
             rel="noreferrer"
-            href={musicProvidersConfig[destination].fialedSearchRedirectUri(
+            href={musicProvidersConfig[provider].fialedSearchRedirectUri(
               `${song.artist} ${song.name}`
             )}
           >

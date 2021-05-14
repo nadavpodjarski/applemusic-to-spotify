@@ -67,12 +67,14 @@ const StatusModal = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const theme = useTheme();
+
   const {
     isStatusModalOpen,
     isCopying,
     playlistToCopy,
     failedCopySongs = [],
   } = useSelector((state) => state.status);
+  const { destination } = useSelector((state) => state.app);
 
   const closeHandler = () => dispatch(actions.closeStatusModal());
 
@@ -114,7 +116,7 @@ const StatusModal = () => {
                     <ListItemText>Failed to copy</ListItemText>
                   </ListItem>
                   {failedCopySongs?.map((song) => (
-                    <FailedCopySong {...{ song }} />
+                    <FailedCopySong {...{ song, provider: destination }} />
                   ))}
                 </List>
               </>

@@ -1,10 +1,10 @@
 import { Typography, Button, makeStyles } from "@material-ui/core";
 
-interface AppbarProps {
+type AppbarProps = {
   title: string;
   logout: () => void;
   isLoggedIn: boolean;
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
