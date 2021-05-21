@@ -1,5 +1,5 @@
 import { Applemusic } from "@styled-icons/simple-icons/";
-import { Playlist, User, Song } from "../utils";
+import { Playlist, User, Song, cleanStringFromSpecialChar } from "../utils";
 
 const API_URL = "https://api.music.apple.com/v1/me/library/playlists";
 const APPLEMUSIC_LOGO = `https://is1-ssl.mzstatic.com/image/thumb/Features127/v4/75/f9/6f/75f96fa5-99ca-0854-3aae-8f76f5cb7fb5/source/600x600bb.jpeg`;
@@ -112,19 +112,30 @@ export const createPlaylist = async (
 
   const tracks = await Promise.all(
     playlist.songs.map(async (song) => {
-      const res = await music.api.search(`${song.artist} ${song.name}`, {
-        types: ["songs"],
-        limit: 24,
-      });
+      const res = await music.api.search(
+        cleanStringFromSpecialChar(`${song.artist} ${song.name}`),
+        {
+          types: ["songs"],
+          limit: 24,
+        }
+      );
+
+      console.log(res.songs);
+      if (!res.songs) {
+        addFailedCopySong(song);
+        return;
+      }
+
       const {
         data: [track],
-      } = res.songs;
+      } = res?.songs;
+
       if (track) {
         return {
           id: track.id,
           type: track.type,
         };
-      } else addFailedCopySong(song);
+      }
     })
   );
 
