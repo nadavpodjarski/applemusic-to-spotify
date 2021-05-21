@@ -15,8 +15,12 @@ import { store } from "./redux/store";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "./theme/";
 
-process.env.NODE_ENV === "production" &&
+if (process.env.NODE_ENV === "production") {
   document.addEventListener("contextmenu", (e) => e.preventDefault());
+  window.addEventListener("beforeunload", (e) => {
+    e.returnValue = "Are you sure you want to leave";
+  });
+}
 
 ReactDOM.render(
   <React.StrictMode>

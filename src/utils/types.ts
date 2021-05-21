@@ -59,9 +59,6 @@ export type Playlist = {
 };
 
 export interface IMusicProvider {
-  /**
-   *@description Music Provider Layout that style this secific provider
-   */
   layout: {
     style: {
       background: string;
@@ -71,25 +68,13 @@ export interface IMusicProvider {
     displayName: string;
     logo: any;
   };
-  /**
-   * @description Invoke login to music provider api and need to return user token and id
-   */
   login: () => Promise<User>;
   logout: () => void;
-  /**
-   * @description
-   */
   getPlaylists: (currentUser: User) => Promise<Array<Playlist>>;
-  /**
-   *
-   */
   createPlaylist: (
     playlist: Playlist,
     currentUser: User,
     addFailedSong: (payload: Song) => Song
   ) => Promise<any>;
-  /**
-   *
-   */
-  fialedSearchRedirectUri: (uri: string) => string;
+  searchURI: (resource: string) => string;
 }

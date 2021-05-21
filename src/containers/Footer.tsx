@@ -1,5 +1,5 @@
 import { makeStyles, Typography } from "@material-ui/core";
-import { Github } from "@styled-icons/bootstrap/";
+import { Copyright } from "@styled-icons/boxicons-regular/";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,16 +33,11 @@ const Footer = () => {
   return (
     <div className={classes.root}>
       <div className={classes.iconPhrase}>
-        <Typography>Made by</Typography>
-        <a
-          href="https://github.com/nadavpodjarski/applemusic-to-spotify"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Github className={classes.icon} />
-        </a>
+        <Copyright className={classes.icon} />
+        <Typography>Playswish.co</Typography>
       </div>
     </div>
   );
 };
+
 export default Footer;

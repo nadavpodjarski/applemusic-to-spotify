@@ -30,6 +30,8 @@ export const layout = {
 };
 
 export const login = async (): Promise<User> => {
+  console.log(window);
+
   //@ts-ignore
   const music = MusicKit.getInstance();
   const token = await music.authorize();
@@ -61,7 +63,7 @@ export const getPlaylists = async ({ token }: User): Promise<Playlist[]> => {
   );
 };
 
-export const fialedSearchRedirectUri = (str: string) => "";
+export const searchURI = (str: string) => "";
 
 const handleMediaItem = (payload: {
   url: string;
@@ -103,7 +105,22 @@ const parsePlaylist = async (playlist: any): Promise<Playlist> => {
   };
 };
 
-export const createPlaylist = async (playlist: Playlist, currentUser: User) => {
+export const createPlaylist = async (playlist: Playlist, { token }: User) => {
+  //@ts-ignore
+  // const music = MusicKit.getInstance();
+
+  // const res: any = await fetch(API_URL + `include=${playlist.title}`, {
+  //   headers: {
+  //     "Music-User-Token": token,
+  //     Authorization: `Bearer ${music.developerToken}`,
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: null,
+  //   method: "POST",
+  // });
+
   console.log(playlist);
+  // console.log(res.json());
   return "";
 };

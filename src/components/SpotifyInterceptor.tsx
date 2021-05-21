@@ -6,6 +6,7 @@ const SpotifyInterceptor = () => {
     window.opener.postMessage(window.location.hash, window.location);
     window.close();
   }
+
   return <div></div>;
 };
 

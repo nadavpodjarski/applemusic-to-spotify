@@ -75,20 +75,21 @@ export const login = async (isAutoLogin?: boolean): Promise<User> => {
         resolve({ id, token });
       }
     };
+
     const popup = window?.open(
       AUTHORIZE_URI(!isAutoLogin),
       "Spotify Login",
       `width=${width},height=${height},right=${right},top=${top}`
     );
 
-    window.addEventListener("message", handleHashToken);
-
     const interval = setInterval(() => {
       if (popup?.closed) {
         clearInterval(interval);
         window.removeEventListener("message", handleHashToken);
       }
-    }, 1000);
+    }, 500);
+
+    window.addEventListener("message", handleHashToken);
   });
 };
 
@@ -132,7 +133,7 @@ export const createPlaylist = async (
   return parsePlaylist(res);
 };
 
-export const fialedSearchRedirectUri = (str: string) =>
+export const searchURI = (str: string) =>
   `https://open.spotify.com/search/${str}`;
 
 export const logout = () => {};

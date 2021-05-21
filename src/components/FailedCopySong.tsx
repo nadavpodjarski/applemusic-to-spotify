@@ -66,7 +66,7 @@ const FailedCopySong = ({ song, provider }: FailedSongProps) => {
           <a
             target="_blank"
             rel="noreferrer"
-            href={musicProvidersConfig[provider].fialedSearchRedirectUri(
+            href={musicProvidersConfig[provider].searchURI(
               `${song.artist} ${song.name}`
             )}
           >
