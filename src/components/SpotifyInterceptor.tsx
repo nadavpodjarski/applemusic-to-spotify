@@ -4,7 +4,9 @@ const SpotifyInterceptor = () => {
     window.location.hash.startsWith("#access_token")
   ) {
     window.opener.postMessage(window.location.hash, window.location);
-    window.close();
+    setTimeout(() => {
+      window.close();
+    }, 800);
   }
 
   return <div></div>;

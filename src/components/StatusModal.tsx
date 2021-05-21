@@ -116,7 +116,10 @@ const StatusModal = () => {
                     <ListItemText>Failed to copy</ListItemText>
                   </ListItem>
                   {failedCopySongs?.map((song) => (
-                    <FailedCopySong {...{ song, provider: destination }} />
+                    <FailedCopySong
+                      {...{ song, provider: destination }}
+                      key={song.id}
+                    />
                   ))}
                 </List>
               </>

@@ -47,6 +47,8 @@ const parsePlaylistSongs = async (id: string) => {
   );
 };
 
+// ###############################################
+
 export const layout = {
   style: {
     background:
@@ -133,7 +135,7 @@ export const createPlaylist = async (
   return parsePlaylist(res);
 };
 
-export const searchURI = (str: string) =>
-  `https://open.spotify.com/search/${str}`;
+export const searchURI = (resource: string) =>
+  `https://open.spotify.com/search/${resource}`;
 
 export const logout = () => {};
