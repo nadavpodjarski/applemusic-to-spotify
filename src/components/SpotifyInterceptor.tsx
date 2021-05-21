@@ -1,15 +1,15 @@
 const SpotifyInterceptor = () => {
-  if (
-    window.location.hash &&
-    window.location.hash.startsWith("#access_token")
-  ) {
-    window.opener.postMessage(window.location.hash, window.location);
-    setTimeout(() => {
-      window.close();
-    }, 800);
-  }
+   if (
+      window.location.hash &&
+      window.location.hash.startsWith("#access_token")
+   ) {
+      window.opener.postMessage(window.location.hash, window.location)
+      setTimeout(() => {
+         window.close()
+      }, 800)
+   }
 
-  return <div></div>;
-};
+   return <div></div>
+}
 
-export default SpotifyInterceptor;
+export default SpotifyInterceptor

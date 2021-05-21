@@ -1,7 +1,7 @@
-import * as musicProviders from "../music-providers";
+import * as musicProviders from "../music-providers"
 
-import { IMusicProvider } from "./types";
+import { IMusicProvider } from "./types"
 
 export const musicProvidersConfig: { [key: string]: IMusicProvider } = {
-  ...musicProviders,
-};
+   ...musicProviders
+}
