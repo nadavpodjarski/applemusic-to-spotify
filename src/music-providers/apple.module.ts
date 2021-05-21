@@ -120,7 +120,6 @@ export const createPlaylist = async (
         }
       );
 
-      console.log(res.songs);
       if (!res.songs) {
         addFailedCopySong(song);
         return;
